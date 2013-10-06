@@ -1,0 +1,3 @@
+// Ember.Handlebars.registerHelper(function(){
+
+// })

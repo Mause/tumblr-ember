@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+        <script src="libs/jquery.js"></script>
+        <script src="libs/handlebars.js"></script>
+
+        <script src="libs/ember.js"></script>
+        <script src="libs/ember-data.js"></script>
+
+        <script src="app.js"></script>
+        <script src="handlebars_utils.js"></script>
+
+        <script src="routes/router.js"></script>
+        <script src="routes/index_route.js"></script>
+        <script src="routes/application_route.js"></script>
+
+        <script src="data_utils/store.js"></script>
+        <script src="data_utils/stream.js"></script>
+        <script src="data_utils/transforms.js"></script>
+        <script src="data_utils/adapter.js"></script>
+        <script src="data_utils/serializer.js"></script>
+
+        <script src="models/post_model.js"></script>
+        <script src="models/photo_model.js"></script>
+        <script src="models/quote_model.js"></script>
+        <script src="models/text_model.js"></script>
+        <script src="models/video_model.js"></script>
+
+        <script src="controllers/index_controller.js"></script>
+
+        <script type="text/x-handlebars" data-template-name="index">
+            {{#each post in controller.postStream}}
+                <div class="post">
+                    {{#if post.is.photo}}
+                        {{partial photoset}}
+                    {{/if}}
+
+                    {{#if post.is.quote}}
+                        {{partial quote}}
+                    {{/if}}
+
+                    {{#if post.is.video}}
+                        {{partial video}}
+                    {{/if}}
+
+                    {{#if post.is.text}}
+                        {{partial text}}
+                    {{/if}}
+
+                    {{post.type}}
+                </div>
+                {{log post.type}}
+            {{/each}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_photoset">
+            {{#each sub_photo in post.photos}}
+                <img {{bind-attr src=sub_photo.all_sizes.2.url}}></img>
+                {{caption}}
+            {{/each}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_text">
+            <p>
+                <h3>{{{post.title}}}</h3>
+                {{{post.body}}}
+            </p>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_video">
+            {{{post.video.embed_code}}}
+            {{{post.caption}}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_quote">
+            <figure class="quote">
+                <blockquote>
+                    {{{post.text}}}
+                </blockquote>
+                <figcaption class="quote-author">
+                    {{{post.source}}}
+                </figcaption>
+            </figure>
+        </script>
+
+    </head>
+    <body>
+    </body>
+</html>

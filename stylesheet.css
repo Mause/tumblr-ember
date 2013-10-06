@@ -1,0 +1,7 @@
+.quote-author:before {
+    content: "-";
+}
+
+.post {
+    border: solid black 1px;
+}
