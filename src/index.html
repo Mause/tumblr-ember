@@ -2,37 +2,45 @@
 <html>
     <head>
         <title></title>
-        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 
-        <script src="libs/jquery.js"></script>
-        <script src="libs/handlebars.js"></script>
+        <script src="js/libs/jquery.js"></script>
+        <script src="js/libs/handlebars.js"></script>
+        <script src="js/libs/underscore.js"></script>
+        <script src="js/libs/oauth.js"></script>
 
-        <script src="libs/ember.js"></script>
-        <script src="libs/ember-data.js"></script>
+        <script src="js/libs/ember.js"></script>
+        <script src="js/libs/ember-data.js"></script>
 
-        <script src="app.js"></script>
-        <script src="handlebars_utils.js"></script>
+        <script src="js/app/app.js"></script>
+        <script src="js/app/prototype_extensions.js"></script>
+        <script src="js/app/handlebars_utils.js"></script>
 
-        <script src="routes/router.js"></script>
-        <script src="routes/index_route.js"></script>
-        <script src="routes/application_route.js"></script>
+        <script src="js/app/mixins/scrolling_mixin.js"></script>
 
-        <script src="data_utils/store.js"></script>
-        <script src="data_utils/stream.js"></script>
-        <script src="data_utils/transforms.js"></script>
-        <script src="data_utils/adapter.js"></script>
-        <script src="data_utils/serializer.js"></script>
+        <script src="js/app/routes/router.js"></script>
+        <script src="js/app/routes/index_route.js"></script>
+        <script src="js/app/routes/application_route.js"></script>
 
-        <script src="models/post_model.js"></script>
-        <script src="models/photo_model.js"></script>
-        <script src="models/quote_model.js"></script>
-        <script src="models/text_model.js"></script>
-        <script src="models/video_model.js"></script>
+        <script src="js/app/data_utils/store.js"></script>
+        <script src="js/app/data_utils/stream.js"></script>
+        <script src="js/app/data_utils/transforms.js"></script>
+        <script src="js/app/data_utils/adapter.js"></script>
+        <script src="js/app/data_utils/serializer.js"></script>
 
-        <script src="controllers/index_controller.js"></script>
+        <script src="js/app/models/post_model.js"></script>
+        <script src="js/app/models/photo_model.js"></script>
+        <script src="js/app/models/quote_model.js"></script>
+        <script src="js/app/models/text_model.js"></script>
+        <script src="js/app/models/video_model.js"></script>
+
+        <script src="js/app/controllers/index_controller.js"></script>
+
+        <script src="js/app/views/index_view.js"></script>
 
         <script type="text/x-handlebars" data-template-name="index">
-            {{#each post in controller.postStream}}
+            <button {{action "auth"}}>Auth</button>
+            {{#each post in controller}}
                 <div class="post">
                     {{#if post.is.photo}}
                         {{partial photoset}}
@@ -49,18 +57,25 @@
                     {{#if post.is.text}}
                         {{partial text}}
                     {{/if}}
-
-                    {{post.type}}
                 </div>
-                {{log post.type}}
             {{/each}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
-            {{#each sub_photo in post.photos}}
-                <img {{bind-attr src=sub_photo.all_sizes.2.url}}></img>
-                {{caption}}
-            {{/each}}
+            <div {{bind-attr style=post.widthString}}>
+                {{#each row in post.sized_rows}}
+                    <div>
+                        {{#each sub_photo in row.content}}
+                            <img {{bind-attr src=sub_photo.url}}
+                                {{bind-attr style=row.widthString}}></img>
+                            {{caption}}
+                        {{/each}}
+                    </div>
+                {{/each}}
+                <p>
+                    {{{post.caption}}}
+                </p>
+            </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="_text">
