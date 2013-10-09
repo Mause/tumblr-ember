@@ -6,7 +6,19 @@ App.IndexRoute = Em.Route.extend({
 //   // beforeModel: function() {},
 //   // afterModel: function() {},
 
-  // model: function() {
-  //   return this.store.find('post', {'api_key': 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'});
-  // }
+  model: function() {
+    return this.store.findQuery('post');
+  },
+
+  actions: {
+    auth: function(){
+      //Using popup (option 1)
+      debugger;
+      OAuth.popup('tumblr', function(error, result) {
+        debugger;
+        //handle error with error
+        //use result.access_token in your API request
+      });
+    }
+  }
 });
