@@ -19,6 +19,13 @@ Ember.ENV.RAISE_ON_DEPRECATION = true;
 Ember.LOG_STACKTRACE_ON_DEPRECATION = true;
 Ember.DEBUG = true;
 
+Ember.Application.reopen({
+  init: function(){
+    OAuth.initialize('0TnyjiS8p8uTFe23WCej3DMeAVQ');
+    return this._super.apply(this, arguments);
+  }
+});
+
 var App = Ember.Application.create({
   title: 'Ball Table Select',
   author: 'Dominic May (http://mause.me)',
@@ -26,13 +33,13 @@ var App = Ember.Application.create({
   // LOG_ACTIVE_GENERATION: true,
   // LOG_TRANSITIONS_INTERNAL: true,
   // LOG_VIEW_LOOKUPS: true,
-  rootElement: 'body'
+  rootElement: 'body',
+
+  customEvents: {
+    scroll: 'scroll'
+  }
 });
 
-Array.prototype.sortBy = function(key){
-  var get = Ember.get;
+App.debounce = _.debounce;
 
-  return this.sort(function(a, b){
-    return get(a, key) > get(b, key);
-  });
-};
+App.API_KEY = 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA';
