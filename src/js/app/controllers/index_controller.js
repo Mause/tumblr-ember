@@ -1,10 +1,16 @@
 App.IndexController = Em.ArrayController.extend({
+  isLoading: false,
+
   actions: {
     scroll: function(){
       'use strict';
-      var model = this.get('model'),
-          last_post = model.get('lastObject'),
-          last_id = last_post.get('id'),
+      if (this.get('isLoading')){
+        return;
+      }
+
+      var oldPosts = this.get('model'),
+          lastOldPost = oldPosts.get('lastObject'),
+          last_id = lastOldPost.get('id'),
           self=this;
 
       var query = {
@@ -13,23 +19,36 @@ App.IndexController = Em.ArrayController.extend({
 
       Em.debug('Loading more posts...');
 
-      this.store.findQuery('post', query).then(function(new_posts){
-        Em.debug('Loading posts succeeded. Displaying....');
+      this.set('isLoading', true);
 
-        model = model.content.concat(new_posts.content);
-        model = DS.RecordArray.create({
-          type: App.Post,
-          content: Ember.A(model),
-          store: self.store,
-          isLoaded: true
-        });
-
-        self.set('model', model);
-
-      }, function(){
-        Em.debug('Loading posts failed.');
-        debugger;
-      });
+      this.store.findQuery('post', query).then(
+        Em.$.proxy(this.loadPostSuccess, this, oldPosts),
+        Em.$.proxy(this.loadPostFailure, this)
+      );
     }
+  },
+
+  loadPostFailure: function(){
+    Em.debug('Loading posts failed.');
+    debugger;
+  },
+
+  loadPostSuccess: function(oldPosts, newPosts){
+    var combined;
+    debugger;
+    Em.debug('Loading posts succeeded. Displaying....');
+
+    combined = oldPosts.addObjects(newPosts);
+
+    // combined = oldPosts.content.concat(newPosts.content);
+    // combined = DS.RecordArray.create({
+    //   type: App.Post,
+    //   content: Ember.A(model),
+    //   store: this.store,
+    //   isLoaded: true
+    // });
+
+    this.set('model', combined);
+    this.set('isLoading', false);
   }
 });
