@@ -1,48 +1,66 @@
 App.Photo = App.Post.extend({
-  photos: DS.hasMany('sub_photo', {embedded: 'always'}),
+  photos: DS.hasMany('sub_photo', {embedded: true}),
   caption: DS.attr('string'),
+  photoset_layout: DS.attr('string'),
+
+  widthString: function(){
+    return "width: %@px;".fmt(this.get('width'));
+  }.property('width'),
+
+  width: function(){
+    'use strict';
+    var rows = this.get('rows'),
+        lengths = rows.mapBy('length'),
+        shortest_row;
+
+    rows = rows.filterBy('length', Math.min.apply(this, lengths));
+    shortest_row = rows.objectAt(0);
+
+    return shortest_row.mapBy('width').sum();
+  }.property('rows'),
+
+  sized_rows: function(){
+    var rows = this.get('rows'),
+        width = this.get('width');
+
+    for (var i=0; i<rows.length; i++){
+      var row = rows[i],
+          cur_width = width / row.length;
+
+      rows[i] = {
+        width: cur_width,
+        widthString: 'width: %@px;'.fmt(cur_width),
+        content: row
+      };
+    }
+
+    return rows;
+  }.property('rows', 'width'),
+
+  rows: function(){
+    var photos = this.get('photos').mapBy('smallest'),
+        photoset_layout = this.get('photoset_layout'),
+        rows = [],
+        cur_row,
+        number_on_row;
+
+    if (!photoset_layout){
+      return [photos];
+    }
+
+    for (var i=0;i<photoset_layout.length; i++){
+      number_on_row = parseInt(photoset_layout[i], 10);
+
+      cur_row = [];
+      for (var q=0; q<number_on_row; q++){
+        cur_row.push(photos.pop());
+      }
+      rows.push(cur_row);
+    }
+
+    // they end being backwards somehow
+    rows.reverse();
+
+    return rows;
+  }.property('photos', 'photoset_layout')
 });
-
-App.SubPhoto = DS.Model.extend({
-  caption: DS.attr('string'),
-
-  // original_size: DS.belongsTo('sub_photo_instance'),
-  alt_sizes: DS.hasMany('sub_photo_instance'),
-
-  original_size: function(){
-    return this.get('alt_sizes').objectAt(0);
-  }.property('alt_sizes.@each'),
-
-  all_sizes: function(){
-    var sizes = {},
-        alt_sizes = this.get('alt_sizes');
-
-    alt_sizes.forEach(function(item, idx){
-      sizes[idx] = item;
-    });
-
-    return sizes;
-  }.property('alt_sizes'),
-
-  display_size: function(){
-    // here we determine the best image size to display... it is difficult
-  }
-});
-
-// {
-//   'tiny': [120, 80],
-//   'extra_small': [200, 133],
-//   'small': [300, 200],
-//   'medium': [400, 266],
-//   'default': [600, 400],
-//   'large': [636, 424],
-//   'extra_large': [798, 532]
-// }
-
-App.SubPhotoInstance = DS.Model.extend({
-  width: DS.attr('number'),
-  height: DS.attr('number'),
-  url: DS.attr('string')
-});
-
-// Ember.Inflector.inflector.uncountable('photo');
