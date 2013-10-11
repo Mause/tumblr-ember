@@ -108,9 +108,11 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
       parentType = this.store.modelFor(typeName);
       /*jshint loopfunc:true*/
       parentType.eachRelationship(function(name, meta){
-        Ember.debug('extracting records from the %@ attribute from %@ record'.fmt(
-          name, typeName));
-        payload = self.process(payload, typeName, name, meta);
+        if (meta.options.embedded){
+          Ember.debug('extracting records from the %@ attribute from %@ record'.fmt(
+            name, typeName));
+          payload = self.process(payload, typeName, name, meta);
+        }
       });
 
       done_keys.push(typeName);
@@ -122,11 +124,6 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
   process: function(payload, parentTypeName, name, meta){
     'use strict';
-
-    if (meta.kind === 'belongsTo' && typeof payload[parentTypeName][0][name] === 'string'){
-      // the relationship is already id-based
-      return;
-    }
 
     var embedded_records = [],
         current_records,
