@@ -19,3 +19,9 @@ Array.prototype.toInts = function(){
     return parseInt(val, 10);
   });
 };
+
+Ember.Enumerable.reopen({
+  toInts: Array.prototype.toInts,
+  sum: Array.prototype.sum,
+  sortBy: Array.prototype.sortBy
+});

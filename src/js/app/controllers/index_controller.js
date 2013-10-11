@@ -39,6 +39,8 @@ App.IndexController = Em.ArrayController.extend({
     Em.debug('Loading posts succeeded. Displaying....');
 
     combined = oldPosts.addObjects(newPosts);
+    combined = combined.sortBy('timestamp');
+    combined = combined.compact();
 
     // combined = oldPosts.content.concat(newPosts.content);
     // combined = DS.RecordArray.create({
