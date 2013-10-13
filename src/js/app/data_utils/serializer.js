@@ -10,7 +10,9 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
   extractArray: function(store, type, payload, id, requestType) {
     var metadata = payload.meta;
-    delete payload.metadata;
+    metadata.blog = payload.response.blog;
+    delete payload.meta;
+    delete payload.response.blog;
 
     payload = this.splitPostArray(store, type, payload, id, requestType);
     payload = this.extractEmbedded(store, type, payload, id, requestType);
