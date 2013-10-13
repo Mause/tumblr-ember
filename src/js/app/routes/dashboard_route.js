@@ -1,19 +1,16 @@
-App.IndexRoute = Em.Route.extend({
-//   // activate: function() {},
-//   // deactivate: function() {},
-//   // setupController: function(controller, model) {},
-//   // renderTemplate: function() {},
-//   // beforeModel: function() {},
-//   // afterModel: function() {},
-
+App.DashboardRoute = Em.Route.extend({
   model: function() {
     return this.store.findQuery('post');
   },
 
+  afterModel: function(model){
+    this.container.lookup('controller:application').set('metadata', null);
+  },
+
   actions: {
     auth: function(){
-      //Using popup (option 1)
       debugger;
+      // OAuth.redirect('tumblr', {}, '');
       OAuth.popup('tumblr', function(error, result) {
         debugger;
         //handle error with error

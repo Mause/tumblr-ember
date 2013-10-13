@@ -3,10 +3,11 @@ App.ApplicationRoute = Em.Route.extend({
     logout: function(){
         'use strict';
         // remove the authentication data
-        TableSelectWeb.AuthManager.reset();
+        this.namespace.AuthManager.reset();
 
+        debugger;
         // remove all the removal_request's from memory
-        this.store.unloadAll('removal_request');
+        this.store.unloadAll();
 
         // and redirect to the homepage
         this.transitionTo('/');
