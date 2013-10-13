@@ -1,7 +1,9 @@
 Ember.RSVP.configure('onerror', function(e) {
-  console.error(e);
-  console.error(e.stack);
-  debugger;
+  if (e.message != "TransitionAborted") {
+    console.error(e);
+    console.error(e.stack);
+    debugger;
+  }
 });
 
 Ember.RSVP.configure('async', function(func){
@@ -23,11 +25,16 @@ Ember.Application.reopen({
   init: function(){
     OAuth.initialize('0TnyjiS8p8uTFe23WCej3DMeAVQ');
     return this._super.apply(this, arguments);
-  }
+  },
+  document_title: function(keyName, value){
+    Ember.run.once(function(){
+      document.title = value;
+    });
+  }.property(),
 });
 
 var App = Ember.Application.create({
-  title: 'Ball Table Select',
+  title: 'Tumblr Ember',
   author: 'Dominic May (http://mause.me)',
   // LOG_TRANSITIONS: true,
   // LOG_ACTIVE_GENERATION: true,
@@ -42,5 +49,3 @@ var App = Ember.Application.create({
   debounce: _.debounce,
   API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'
 });
-
-
