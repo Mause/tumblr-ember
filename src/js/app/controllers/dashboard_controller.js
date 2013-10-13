@@ -1,5 +1,6 @@
-App.IndexController = Em.ArrayController.extend({
+App.DashboardController = Em.ArrayController.extend({
   isLoading: false,
+  needs: ['application'],
 
   actions: {
     scroll: function(){
@@ -8,13 +9,19 @@ App.IndexController = Em.ArrayController.extend({
         return;
       }
 
-      var oldPosts = this.get('model'),
-          lastOldPost = oldPosts.get('lastObject'),
+      var oldPosts = this.get('model');
+      if (Em.typeOf(oldPosts) != 'array'){
+        oldPosts = oldPosts.get('content');
+      }
+
+      var lastOldPost = oldPosts.sortBy('timestamp').get('lastObject'),
           last_id = lastOldPost.get('id'),
+          blog_name = this.get('controllers.application.metadata.name'),
           self=this;
 
       var query = {
-        since_id: last_id
+        since_id: last_id,
+        blog_name: blog_name
       };
 
       Em.debug('Loading more posts...');
@@ -34,21 +41,10 @@ App.IndexController = Em.ArrayController.extend({
   },
 
   loadPostSuccess: function(oldPosts, newPosts){
-    var combined;
-    debugger;
     Em.debug('Loading posts succeeded. Displaying....');
 
-    combined = oldPosts.addObjects(newPosts);
-    combined = combined.sortBy('timestamp');
+    var combined = oldPosts.addObjects(newPosts);
     combined = combined.compact();
-
-    // combined = oldPosts.content.concat(newPosts.content);
-    // combined = DS.RecordArray.create({
-    //   type: App.Post,
-    //   content: Ember.A(model),
-    //   store: this.store,
-    //   isLoaded: true
-    // });
 
     this.set('model', combined);
     this.set('isLoading', false);
