@@ -22,11 +22,10 @@ var AuthManager = Ember.Object.extend({
     // future AJAX requests to the server.
     authenticate: function(accessToken, userId) {
         'use strict';
-        var adapter = this.namespace.__container__.lookup('adapter:application');
-        adapter.set('headers.Authorization', 'Bearer ' + accessToken);
+        this.set('this.namespace.API_KEY', accessToken);
 
         // var user = User.find(userId);
-        this.set('apiKey', ApiKey.create({
+        this.set('apiKey', this.namespace.ApiKey.create({
             accessToken: accessToken,
             user: {Id: userId}
         }));
@@ -41,8 +40,7 @@ var AuthManager = Ember.Object.extend({
         Ember.run.next(this, function(){
             this.set('apiKey', null);
 
-            var adapter = App.__container__.lookup('adapter:application');
-            adapter.set('headers.Authorization', 'Bearer none');
+            this.set('this.namespace.API_KEY', '');
         });
     },
 
@@ -50,12 +48,13 @@ var AuthManager = Ember.Object.extend({
     // the user when the browser is refreshed.
     apiKeyObserver: function() {
         'use strict';
-        if (Ember.isEmpty(this.get('apiKey'))) {
+        var apiKey = this.get('apiKey');
+        if (Ember.isEmpty(apiKey)) {
             Ember.$.removeCookie('access_token');
             Ember.$.removeCookie('auth_user');
         } else {
-            Ember.$.cookie('access_token', this.get('apiKey.accessToken'));
-            Ember.$.cookie('auth_user', this.get('apiKey.user.Id'));
+            Ember.$.cookie('access_token', apiKey.get('accessToken'));
+            Ember.$.cookie('auth_user', apiKey.get('user.Id'));
         }
     }.observes('apiKey')
 });
@@ -68,7 +67,7 @@ DS.rejectionHandler = function(reason) {
     throw reason;
 };
 
-ApiKey = Ember.Object.extend({
+App.ApiKey = Ember.Object.extend({
   access_token: '',
   user: null
 });
