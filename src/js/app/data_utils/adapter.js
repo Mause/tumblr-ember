@@ -1,4 +1,9 @@
 App.ApplicationAdapter = DS.RESTAdapter.extend({
+  findQuery: function(store, type, query) {
+    query.limit = 5;
+    return this.ajax(this.buildURL(type.typeKey, query), 'GET', {data: query});
+  },
+
   ajax: function(url, type, hash){
     var promise = this._super(url, type, hash), success;
 
@@ -26,15 +31,27 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     return hash;
   },
 
-  buildURL: function(type, id){
+  buildURL: function(type, query){
     'use strict';
-    var url = this._super.call(this, type, id);
+    var url = [],
+        host = this.get('host'),
+        namespace = this.get('namespace'),
+        blog_name = query.blog_name;
+    delete query.blog_name;
 
-    if (url.charAt(url.length-1) === '/'){
-      return url.substring(0, url.length-1);
+    url.push(host);
+    if (Ember.isEmpty(query)){
+      url.push('user/dashboard');
     } else {
-      return url;
+      url.push(namespace, 'blog');
+      url.push(blog_name + '.tumblr.com');
+      url.push('posts', this.pathForType(type));
     }
+
+    url = url.filter(function(x){ return !!x; });
+    url = url.join('/');
+
+    return url;
   },
 
   pathForType: function(type){
@@ -46,10 +63,10 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
   }
 });
 
-if (false){
+if (!false){
   App.ApplicationAdapter.reopen({
     host: 'http://api.tumblr.com',
-    namespace: 'v2/blog/mause-me.tumblr.com/posts',
+    namespace: 'v2',
     online: true
   });
 } else {
