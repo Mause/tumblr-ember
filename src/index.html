@@ -49,7 +49,7 @@
 
         <script type="text/x-handlebars">
             <div class="container">
-                {{partial "header"}}
+                {{partial 'header'}}
 
                 {{outlet 'main'}}
             </div>
@@ -60,8 +60,8 @@
                 <h1>
                     Tumblr Ember
 
-                    {{#if controller.metadata}}
-                        &nbsp;-&nbsp;{{controller.metadata.title}}
+                    {{#if controller.metadata.title}}
+                        - {{controller.metadata.title}}
                     {{/if}}
                 </h1>
 
@@ -76,7 +76,23 @@
             </header>
         </script>
 
-        <script type="text/x-handlebars" data-template-name="_loading">
+        <script type="text/x-handlebars" data-template-name="authenticate">
+            <div class="row col-lg-12 well well-lg">
+                <button {{action "auth"}} class="btn btn-primary btn-large">
+                    Authenticate
+                </button>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="loading_route">
+            <div class="row col-lg-12 well well-lg">
+                <h1>
+                    Loading...
+                </h1>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_loading_posts">
             <div {{bind-attr class="isLoading::display_none"}}>
                 <footer class="row col-lg-12">
                     <h2 class="inner">
@@ -89,25 +105,30 @@
         <script type="text/x-handlebars" data-template-name="post_stream">
             {{#each post in controller}}
                 <div class="post row col-lg-12 well well-lg">
-                    {{#if post.is.photo}}
-                        {{partial photoset}}
-                    {{/if}}
-
-                    {{#if post.is.quote}}
-                        {{partial quote}}
-                    {{/if}}
-
-                    {{#if post.is.video}}
-                        {{partial video}}
-                    {{/if}}
-
-                    {{#if post.is.text}}
-                        {{partial text}}
-                    {{/if}}
+                    {{partial 'post'}}
                 </div>
             {{/each}}
 
-            {{partial "loading"}}
+            {{partial 'loading_posts'}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_post">
+            {{! this amounts to a switch case }}
+            {{#if post.is.photo}}
+                {{partial 'photoset'}}
+            {{/if}}
+
+            {{#if post.is.quote}}
+                {{partial 'quote'}}
+            {{/if}}
+
+            {{#if post.is.video}}
+                {{partial 'video'}}
+            {{/if}}
+
+            {{#if post.is.text}}
+                {{partial 'text'}}
+            {{/if}}
         </script>
 
 
