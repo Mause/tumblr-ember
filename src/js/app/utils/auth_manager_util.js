@@ -34,8 +34,7 @@ var AuthManager = Ember.Object.extend({
     // Log out the user
     reset: function() {
         'use strict';
-        debugger;
-        this.namespace.__container__.lookup("route:application").transitionTo('sessions.new');
+        this.namespace.__container__.lookup("route:application").transitionTo('authenticate');
         Ember.run.sync();
         Ember.run.next(this, function(){
             this.set('apiKey', null);
