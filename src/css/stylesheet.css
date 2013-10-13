@@ -4,4 +4,33 @@
 
 .post {
     border: solid black 1px;
+    padding: 20px;
+}
+
+.footer {
+  width: 100px;
+  border-top: solid black 2px;
+}
+
+.footer.inner {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.display_none {
+  display: none;
+}
+
+img {
+  /*border: solid black 1px;*/
+  margin-left: -4px;
+}
+
+.row.img {
+  float: left;
+}
+
+nav {
+  float: right;
+  margin-top: -50px;
 }

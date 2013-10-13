@@ -3,8 +3,10 @@
     <head>
         <title></title>
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 
         <script src="js/libs/jquery.js"></script>
+        <script src="js/libs/jquery.cookie.js"></script>
         <script src="js/libs/handlebars.js"></script>
         <script src="js/libs/underscore.js"></script>
         <script src="js/libs/oauth.js"></script>
@@ -18,30 +20,75 @@
 
         <script src="js/app/mixins/scrolling_mixin.js"></script>
 
+        <script src="js/app/utils/auth_manager_util.js"></script>
+
         <script src="js/app/routes/router.js"></script>
-        <script src="js/app/routes/index_route.js"></script>
+        <script src="js/app/routes/dashboard_route.js"></script>
+        <script src="js/app/routes/single_blog_route.js"></script>
         <script src="js/app/routes/application_route.js"></script>
 
         <script src="js/app/data_utils/store.js"></script>
-        <script src="js/app/data_utils/stream.js"></script>
         <script src="js/app/data_utils/transforms.js"></script>
         <script src="js/app/data_utils/adapter.js"></script>
         <script src="js/app/data_utils/serializer.js"></script>
 
         <script src="js/app/models/post_model.js"></script>
         <script src="js/app/models/photo_model.js"></script>
+        <script src="js/app/models/sub_photo_model.js"></script>
+        <script src="js/app/models/sub_photo_instance_model.js"></script>
         <script src="js/app/models/quote_model.js"></script>
         <script src="js/app/models/text_model.js"></script>
         <script src="js/app/models/video_model.js"></script>
 
-        <script src="js/app/controllers/index_controller.js"></script>
+        <script src="js/app/controllers/application_controller.js"></script>
+        <script src="js/app/controllers/dashboard_controller.js"></script>
+        <script src="js/app/controllers/single_blog_controller.js"></script>
 
-        <script src="js/app/views/index_view.js"></script>
+        <script src="js/app/views/dashboard_view.js"></script>
+        <script src="js/app/views/single_blog_view.js"></script>
 
-        <script type="text/x-handlebars" data-template-name="index">
-            <button {{action "auth"}}>Auth</button>
+        <script type="text/x-handlebars">
+            <div class="container">
+                {{partial "header"}}
+
+                {{outlet 'main'}}
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_header">
+            <header class="row col-lg-12">
+                <h1>
+                    Tumblr Ember
+
+                    {{#if controller.metadata}}
+                        &nbsp;-&nbsp;{{controller.metadata.title}}
+                    {{/if}}
+                </h1>
+
+                <nav>
+                    {{#link-to 'dashboard' class="btn btn-primary"}}Home{{/link-to}}
+                    {{#if isAuthenticated}}
+                        <button {{action "logout"}} class="btn btn-primary">Logout</button>
+                    {{else}}
+                        <button {{action "auth"}} class="btn btn-primary">Auth</button>
+                    {{/if}}
+                </nav>
+            </header>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_loading">
+            <div {{bind-attr class="isLoading::display_none"}}>
+                <footer class="row col-lg-12">
+                    <h2 class="inner">
+                        Loading...
+                    </h2>
+                </footer>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="post_stream">
             {{#each post in controller}}
-                <div class="post">
+                <div class="post row col-lg-12 well well-lg">
                     {{#if post.is.photo}}
                         {{partial photoset}}
                     {{/if}}
@@ -59,15 +106,22 @@
                     {{/if}}
                 </div>
             {{/each}}
+
+            {{partial "loading"}}
         </script>
 
+
         <script type="text/x-handlebars" data-template-name="_photoset">
-            <div {{bind-attr style=post.widthString}}>
+            <div>
+             {{!bind-attr style=post.widthString}}
                 {{#each row in post.sized_rows}}
                     <div>
                         {{#each sub_photo in row.content}}
-                            <img {{bind-attr src=sub_photo.url}}
-                                {{bind-attr style=row.widthString}}></img>
+                            <img {{bind-attr src=sub_photo.url
+                                             width=sub_photo.width
+                                             style=row.widthString}}
+                                ></img>
+                                {{! height=sub_photo.height}}
                             {{caption}}
                         {{/each}}
                     </div>
