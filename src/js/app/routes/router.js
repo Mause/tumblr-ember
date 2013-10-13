@@ -14,6 +14,7 @@ App.Router.reopen({
 });
 
 App.Router.map(function(){
+  this.resource('authenticate', {path: '/auth'});
   this.resource('dashboard', {path: '/'});
   this.resource('single_blog', {path: '/blog/*blog_name'});
 });
