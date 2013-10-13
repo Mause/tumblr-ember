@@ -37,9 +37,10 @@ var App = Ember.Application.create({
 
   customEvents: {
     scroll: 'scroll'
-  }
+  },
+
+  debounce: _.debounce,
+  API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'
 });
 
-App.debounce = _.debounce;
 
-App.API_KEY = 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA';
