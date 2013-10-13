@@ -39,15 +39,23 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
         blog_name = query.blog_name;
     delete query.blog_name;
 
-    url.push(host);
+    // both types of url star with the host and namespace
+    url.push(host, namespace);
+
     if (Ember.isEmpty(query)){
+      // the currently authenticated users dashboard
       url.push('user/dashboard');
+
     } else {
-      url.push(namespace, 'blog');
-      url.push(blog_name + '.tumblr.com');
-      url.push('posts', this.pathForType(type));
+      // whichever single blog is currently selected
+      url.push(
+        'blog',
+        blog_name + '.tumblr.com',
+        'posts', this.pathForType(type)
+      );
     }
 
+    // filter out falsy segments
     url = url.filter(function(x){ return !!x; });
     url = url.join('/');
 
@@ -55,6 +63,10 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
   },
 
   pathForType: function(type){
+    // simply posts are accessable at the root url,
+    // everything else is as per normal Ember Data
+    // convention
+
     if (type == 'post'){
       return '';
     } else {
