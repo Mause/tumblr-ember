@@ -21,7 +21,9 @@ App.Scrolling = Em.Mixin.create({
 
     onScrollMethod = function() {
       if($(window).scrollTop() + $(window).height() > $(document).height() - opts.pixels) {
-        return scrollingMixin.get('controller').send('scroll');
+        if (!(scrollingMixin.isDestroying || scrollingMixin.isDestroyed)){
+          return scrollingMixin.get('controller').send('scroll');
+        }
       }
     };
 
