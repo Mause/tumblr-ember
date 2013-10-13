@@ -1,4 +1,10 @@
 App.DashboardRoute = Em.Route.extend({
+  beforeModel: function(){
+    if (!this.router.get('isAuthenticated')){
+      this.transitionTo('authenticate');
+    }
+  },
+
   model: function() {
     return this.store.findQuery('post');
   },
@@ -7,15 +13,7 @@ App.DashboardRoute = Em.Route.extend({
     this.container.lookup('controller:application').set('metadata', null);
   },
 
-  actions: {
-    auth: function(){
-      debugger;
-      // OAuth.redirect('tumblr', {}, '');
-      OAuth.popup('tumblr', function(error, result) {
-        debugger;
-        //handle error with error
-        //use result.access_token in your API request
-      });
-    }
+  deactivate: function() {
+    this.store.unloadAllRecords();
   }
 });
