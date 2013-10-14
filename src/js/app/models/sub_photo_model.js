@@ -6,9 +6,9 @@ App.SubPhoto = DS.Model.extend({
 
   original_size: DS.belongsTo('sub_photo_instance', {embedded: true}),
 
-  original_size: function(){
-    return this.get('alt_sizes').objectAt(0);
-  }.property('alt_sizes.@each'),
+  // original_size: function(){
+  //   return this.get('alt_sizes').objectAt(0);
+  // }.property('alt_sizes.@each'),
 
   smallest: function(){
     var sizes_map = {};
