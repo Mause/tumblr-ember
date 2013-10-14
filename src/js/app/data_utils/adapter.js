@@ -10,7 +10,8 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     success = function(promise, payload){
       if (payload.meta && payload.meta.status){
         if (payload.meta.status !== 200){
-          return Ember.RSVP.reject('Bad status code');
+          return Ember.RSVP.reject('Bad status code: %@ with message "%@"'.fmt(
+            payload.meta.status, payload.meta.msg));
         }
       }
       return payload;
@@ -42,7 +43,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     // both types of url star with the host and namespace
     url.push(host, namespace);
 
-    if (Ember.isEmpty(query)){
+    if (!blog_name){
       // the currently authenticated users dashboard
       url.push('user/dashboard');
 
