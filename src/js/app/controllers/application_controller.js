@@ -10,11 +10,7 @@ App.ApplicationController = Em.Controller.extend({
     var metadata = this.get('metadata'),
         title = this.namespace.title;
 
-    debugger;
-    console.log('"%@"'.fmt(metadata.title));
-    if (!!metadata.title){
-      title += ' - %@'.fmt(metadata.title);
-    }
+    if (!!metadata.title){ title += ' - %@'.fmt(metadata.title); }
     this.namespace.set('document_title', title);
 
   }.observes('metadata')
