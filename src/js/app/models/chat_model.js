@@ -1,4 +1,4 @@
-App.Chat = App.Post.extend({
+App.Chat = DS.Model.extend(App.PostMixin, {
   title: DS.attr('string'),
   body: DS.attr('string'),
   dialogue: DS.attr('array')

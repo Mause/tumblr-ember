@@ -1,4 +1,4 @@
-App.Audio = App.Post.extend({
+App.Audio = DS.Model.extend(App.PostMixin, {
   caption: DS.attr('string'),
   player: DS.attr('string'),
   plays: DS.attr('number'),

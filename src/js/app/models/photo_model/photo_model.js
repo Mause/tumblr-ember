@@ -1,4 +1,4 @@
-App.Photo = App.Post.extend({
+App.Photo = DS.Model.extend(App.PostMixin, {
   photos: DS.hasMany('sub_photo', {embedded: true}),
   caption: DS.attr('string'),
   photoset_layout: DS.attr('string'),

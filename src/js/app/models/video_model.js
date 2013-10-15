@@ -1,4 +1,4 @@
-App.Video = App.Post.extend({
+App.Video = DS.Model.extend(App.PostMixin, {
   caption: DS.attr('string'),
   player: DS.attr('raw'),
 
