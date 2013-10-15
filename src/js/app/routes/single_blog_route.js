@@ -3,6 +3,7 @@ App.SingleBlogRoute = App.DashboardRoute.extend({
 
   model: function(params) {
     var namespace = this.router.namespace;
+    namespace.api_config.offset += namespace.api_config.limit;
 
     return this.store.findQuery('post', {
       limit: namespace.api_config.limit,
