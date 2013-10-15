@@ -1,4 +1,7 @@
 App.ApplicationAdapter = DS.RESTAdapter.extend({
+  api_host: 'http://api.tumblr.com',
+  api_namespace: 'v2',
+
   namespace: null,
 
   init: function(){
@@ -47,8 +50,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
   ajaxOptions: function(url, type, hash){
     hash = this._super(url, type, hash);
 
-    if (this.get('online'))
-      hash.dataType = 'jsonp';
+    hash.dataType = 'jsonp';
 
     return hash;
   },
@@ -96,16 +98,3 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     }
   }
 });
-
-if (!false){
-  App.ApplicationAdapter.reopen({
-    api_host: 'http://api.tumblr.com',
-    api_namespace: 'v2',
-    online: true
-  });
-} else {
-  App.ApplicationAdapter.reopen({
-    namespace: 'posts',
-    online: false
-  });
-}
