@@ -129,8 +129,11 @@
             {{#if post.is.text}}
                 {{partial 'text'}}
             {{/if}}
-        </script>
 
+            {{#if post.is.answer}}
+                {{partial 'text'}}
+            {{/if}}
+        </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
             <div>
@@ -174,6 +177,26 @@
                     {{{post.source}}}
                 </figcaption>
             </figure>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_answer">
+            <div>
+                <div>
+                    <strong>
+                        <a {{bind-attr src=post.asking_url}}>
+                            {{post.asking_name}}:
+                        </a>
+                    </strong>
+                    {{question}}
+                </div>
+
+                <div>
+                    <strong>
+                        {{post.blog_name}}:
+                    </strong>
+                    {{answer}}
+                </div>
+            </div>
         </script>
 
     </head>
