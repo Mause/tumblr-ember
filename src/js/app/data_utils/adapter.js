@@ -29,11 +29,11 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
 
     return promise.then(
       Em.$.proxy(success, this, promise),
-      Em.$.proxy(this.ajax_failure, this)
+      Em.$.proxy(this.ajaxFailure, this)
     );
   },
 
-  ajax_failure: function(error){
+  ajaxFailure: function(error){
     var message;
 
     if (Em.typeOf(error) === 'object' && (!!error.statusText || !!error.status)){
