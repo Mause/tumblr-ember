@@ -26,6 +26,7 @@ Ember.Application.reopen({
     OAuth.initialize('0TnyjiS8p8uTFe23WCej3DMeAVQ');
     return this._super.apply(this, arguments);
   },
+
   document_title: function(keyName, value){
     Ember.run.once(function(){
       document.title = value;
@@ -46,6 +47,10 @@ var App = Ember.Application.create({
     scroll: 'scroll'
   },
 
-  debounce: _.debounce,
+  api_config: {
+    up_to: 0,
+    limit: 5
+  },
+
   API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'
 });
