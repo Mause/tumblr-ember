@@ -98,7 +98,7 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="_loading_posts">
-            <div {{bind-attr class="isLoading::display_none"}}>
+            <div>
                 <footer class="row col-lg-12">
                     <h2 class="inner">
                         {{#if isLoading}}
@@ -106,7 +106,7 @@
                         {{/if}}
 
                         {{#if loadingFailed}}
-                            Loading failed. <span {{action 'tryAgain'}}>Try again?</span>
+                            Loading failed. <a {{action 'tryAgain'}}>Try again?</a>
                         {{/if}}
                     </h2>
                 </footer>
