@@ -1,6 +1,11 @@
 App.SingleBlogRoute = Em.Route.extend({
   model: function(params) {
-    return this.store.findQuery('post', {blog_name: params.blog_name});
+    var namespace = this.router.namespace;
+
+    return this.store.findQuery('post', {
+      blog_name: params.blog_name,
+      limit: namespace.api_config.limit
+    });
   },
 
   setMetadata: function(metadata){

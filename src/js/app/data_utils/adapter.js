@@ -9,11 +9,6 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     return this._super.apply(this, arguments);
   },
 
-  findQuery: function(store, type, query) {
-    query.limit = this.namespace.api_config.limit;
-    return this.ajax(this.buildURL(type.typeKey, query), 'GET', {data: query});
-  },
-
   ajax: function(url, type, hash){
     var promise = this._super(url, type, hash), success;
 
@@ -63,7 +58,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
         blog_name = query.blog_name;
     delete query.blog_name;
 
-    // both types of url star with the host and namespace
+    // both types of url start with the host and namespace
     url.push(host, namespace);
 
     if (!blog_name){
@@ -73,8 +68,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     } else {
       // whichever single blog is currently selected
       url.push(
-        'blog',
-        blog_name + '.tumblr.com',
+        'blog', blog_name + '.tumblr.com',
         'posts', this.pathForType(type)
       );
     }
@@ -87,7 +81,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
   },
 
   pathForType: function(type){
-    // simply posts are accessable at the root url,
+    // simple posts are accessable at the root url,
     // everything else is as per normal Ember Data
     // convention
 

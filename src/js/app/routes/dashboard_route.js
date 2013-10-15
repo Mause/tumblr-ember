@@ -6,7 +6,11 @@ App.DashboardRoute = Em.Route.extend({
   },
 
   model: function() {
-    return this.store.findQuery('post');
+    var namespace = this.router.namespace;
+
+    return this.store.findQuery('post', {
+      limit: namespace.api_config.limit
+    });
   },
 
   afterModel: function(model){
