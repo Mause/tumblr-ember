@@ -101,7 +101,13 @@
             <div {{bind-attr class="isLoading::display_none"}}>
                 <footer class="row col-lg-12">
                     <h2 class="inner">
-                        Loading...
+                        {{#if isLoading}}
+                            Loading...
+                        {{/if}}
+
+                        {{#if loadingFailed}}
+                            Loading failed. <span {{action 'tryAgain'}}>Try again?</span>
+                        {{/if}}
                     </h2>
                 </footer>
             </div>
