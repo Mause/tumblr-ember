@@ -54,3 +54,15 @@ var App = Ember.Application.create({
 
   API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'
 });
+
+
+Em.aliasAction = function(actionName){
+  var a_slice = Array.prototype.slice,
+      predefined_args = [actionName].concat(a_slice.call(arguments, 1));
+
+  return function(){
+    var args = predefined_args.concat(a_slice(arguments));
+
+    return this.send.apply(this, args);
+  };
+};
