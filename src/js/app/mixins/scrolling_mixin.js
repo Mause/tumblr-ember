@@ -14,7 +14,7 @@ App.Scrolling = Em.Mixin.create({
     @method bindScrolling
   */
   bindScrolling: function(opts) {
-    opts = opts || {debounce: 100, pixels: 100};
+    opts = opts || {pixels: 100};
 
     var scrollingMixin = this,
         onScrollMethod;
@@ -26,10 +26,6 @@ App.Scrolling = Em.Mixin.create({
         }
       }
     };
-
-    if (opts.debounce) {
-      onScrollMethod = App.debounce(onScrollMethod, 100);
-    }
 
     App.ScrollingDOMMethods.bindOnScroll(onScrollMethod);
   },
