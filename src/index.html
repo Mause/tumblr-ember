@@ -141,6 +141,10 @@
             {{#if post.is.chat}}
                 {{partial 'chat'}}
             {{/if}}
+
+            {{#if post.is.link}}
+                {{partial 'link'}}
+            {{/if}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
@@ -247,6 +251,16 @@
                     </li>
                     {{/for}}
                 </ul>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_link">
+            <div>
+                <h3><a {{bind-attr src=post.url}}>{{post.title}}</a></h3>
+
+                <p>
+                    {{{post.description}}}
+                </p>
             </div>
         </script>
 
