@@ -7,11 +7,9 @@ Array.prototype.sortBy = function(key){
 };
 
 Array.prototype.sum = function(){
-  var total = 0;
-  this.forEach(function(val){
-    total += val;
+  return this.reduce(function(a, b){
+    return a + b;
   });
-  return total;
 };
 
 Array.prototype.toInts = function(){
