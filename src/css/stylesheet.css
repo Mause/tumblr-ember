@@ -2,9 +2,8 @@
     content: "-";
 }
 
-.post {
-    border: solid black 1px;
-    padding: 20px;
+.avatar {
+  margin-right: 10px;
 }
 
 .footer {
@@ -21,16 +20,11 @@
   display: none;
 }
 
-img {
-  /*border: solid black 1px;*/
-  margin-left: -4px;
-}
-
-.row.img {
-  float: left;
-}
-
 nav {
   float: right;
   margin-top: -50px;
+}
+
+.post-content {
+  width: 90% !important;
 }

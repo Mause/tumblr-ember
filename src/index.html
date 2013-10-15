@@ -109,8 +109,13 @@
 
         <script type="text/x-handlebars" data-template-name="post_stream">
             {{#each post in controller}}
-                <div class="post row col-lg-12 well well-lg">
-                    {{partial 'post'}}
+                <div class="post row">
+                    <div class="col-lg-1 well well-lg avatar">
+                        <img width="50" height="50"/>
+                    </div>
+                    <div class="col-lg-11 well well-lg post-content">
+                        {{partial 'post'}}
+                    </div>
                 </div>
             {{/each}}
 
