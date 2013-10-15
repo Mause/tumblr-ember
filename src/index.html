@@ -133,6 +133,10 @@
             {{#if post.is.answer}}
                 {{partial 'text'}}
             {{/if}}
+
+            {{#if post.is.audio}}
+                {{partial 'audio'}}
+            {{/if}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
@@ -198,6 +202,29 @@
                 </div>
             </div>
         </script>
+
+        <script type="text/x-handlebars" data-template-name="_audio">
+            <div>
+                <figure class="audio">
+                    <blockquote>
+                        {{{post.player}}}
+                    </blockquote>
+                    <figcaption class="audio-caption">
+                        {{post.caption}}
+                    </figcaption>
+                </figure>
+                <div>
+                    <strong>plays:</strong> {{post.plays}}<br/>
+                    <strong>album_art:</strong> {{post.album_art}}<br/>
+                    <strong>artist:</strong> {{post.artist}}<br/>
+                    <strong>album:</strong> {{post.album}}<br/>
+                    <strong>track_name:</strong> {{post.track_name}}<br/>
+                    <strong>track_number:</strong> {{post.track_number}}<br/>
+                    <strong>year:</strong> {{post.year}}<br/>
+                </div>
+            </div>
+        </script>
+
 
     </head>
     <body>
