@@ -14,10 +14,14 @@ App.DashboardRoute = Em.Route.extend({
   },
 
   afterModel: function(model){
-    this.container.lookup('controller:application').set('metadata', null);
+    this.setMetadata({});
   },
 
   deactivate: function() {
     this.store.unloadAllRecords();
+  },
+
+  setMetadata: function(metadata){
+    this.container.lookup('controller:application').set('metadata', metadata);
   }
 });

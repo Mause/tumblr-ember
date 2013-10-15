@@ -1,15 +1,13 @@
-App.SingleBlogRoute = Em.Route.extend({
+App.SingleBlogRoute = App.DashboardRoute.extend({
+  beforeModel: Em.K,
+
   model: function(params) {
     var namespace = this.router.namespace;
 
     return this.store.findQuery('post', {
-      blog_name: params.blog_name,
-      limit: namespace.api_config.limit
+      limit: namespace.api_config.limit,
+      blog_name: params.blog_name
     });
-  },
-
-  setMetadata: function(metadata){
-    this.container.lookup('controller:application').set('metadata', metadata);
   },
 
   afterModel: function(model){
@@ -18,6 +16,6 @@ App.SingleBlogRoute = Em.Route.extend({
 
   deactivate: function() {
     this.setMetadata({});
-    this.store.unloadAllRecords();
+    return this._super();
   }
 });
