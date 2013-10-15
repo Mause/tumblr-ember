@@ -1,2 +1,1 @@
-App.SingleBlogController = App.DashboardController.extend({
-});
+App.SingleBlogController = App.DashboardController.extend({});
