@@ -9,6 +9,11 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     return this._super.apply(this, arguments);
   },
 
+  findQuery: function(store, type, query) {
+    // this is overridden here so we can receive the query in buildURL
+    return this.ajax(this.buildURL(type.typeKey, query), 'GET', {data: query});
+  },
+
   ajax: function(url, type, hash){
     var promise = this._super(url, type, hash), success;
 
