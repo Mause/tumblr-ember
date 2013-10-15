@@ -137,6 +137,10 @@
             {{#if post.is.audio}}
                 {{partial 'audio'}}
             {{/if}}
+
+            {{#if post.is.chat}}
+                {{partial 'chat'}}
+            {{/if}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
@@ -222,6 +226,27 @@
                     <strong>track_number:</strong> {{post.track_number}}<br/>
                     <strong>year:</strong> {{post.year}}<br/>
                 </div>
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_chat">
+            <div>
+                <h3>{{post.title}}</h3>
+                <p>
+                    {{{post.body}}}
+                </p>
+
+                <ul>
+                    {{#for message in post.dialogue}}
+                    <li>
+                        <span {{bind-attr title=message.label}}>
+                            {{post.name}}
+                        </span>
+                        {{message.phrase}}
+
+                    </li>
+                    {{/for}}
+                </ul>
             </div>
         </script>
 
