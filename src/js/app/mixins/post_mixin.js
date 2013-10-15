@@ -1,4 +1,4 @@
-App.PostMixin = Ember.Mixin.extend({
+App.PostMixin = Ember.Mixin.create({
     blog_name: DS.attr('string'),
     post_url: DS.attr('string'),
     type: DS.attr('string'),
