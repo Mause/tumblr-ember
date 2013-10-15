@@ -18,9 +18,13 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     };
 
     return promise.then(
-      Em.$.proxy(success, this, promise)
-      // we don't care about failure here
+      Em.$.proxy(success, this, promise),
+      Em.$.proxy(this.failure, this, promise)
     );
+  },
+
+  failure: function(promise, error){
+    Em.debug('Failed with: %@'.fmt(error.message));
   },
 
   ajaxOptions: function(url, type, hash){
