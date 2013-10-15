@@ -6,17 +6,32 @@ App.Store = DS.Store.extend({
     return this._super(type, id);
   },
 
-  unloadAllRecords: function(){
+  allRecords: function(){
     var typeMaps = this.get('typeMaps'),
-        records = [],
-        record;
-
+        records = [];
     for (var key in typeMaps){
       records = records.concat(typeMaps[key].records);
     }
+    return records;
+  },
+
+  unloadAllRecords: function(){
+    var records = this.allRecords(),
+        record;
 
     while (record = records.pop()){
       record.unloadRecord();
     }
-  }
+  },
+
+  modelFor: function(type){
+    if (type === 'post'){
+      this.Post.typeKey = 'post';
+      return this.Post;
+    } else {
+      return this._super(type);
+    }
+  },
+
+  Post: DS.Model.extend(App.PostMixin)
 });

@@ -120,7 +120,6 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
       done_keys.push(typeName);
     }
 
-
     return payload;
   },
 
@@ -172,7 +171,7 @@ DS.AdapterPopulatedRecordArray.reopen({
     metadata = records.metadata;
     delete records.metadata;
 
-    if (Ember.get(this, 'type') === App.Post){
+    if (Ember.get(this, 'type') === this.store.Post){
       this.setProperties({
         content: Ember.A(records),
         isLoaded: true,
