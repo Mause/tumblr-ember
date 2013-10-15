@@ -1,6 +1,13 @@
 App.ApplicationAdapter = DS.RESTAdapter.extend({
+  namespace: null,
+
+  init: function(){
+    this.set('namespace', this.container.lookup('application:main'));
+    return this._super.apply(this, arguments);
+  },
+
   findQuery: function(store, type, query) {
-    query.limit = 5;
+    query.limit = this.namespace.api_config.limit;
     return this.ajax(this.buildURL(type.typeKey, query), 'GET', {data: query});
   },
 
@@ -19,12 +26,22 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
 
     return promise.then(
       Em.$.proxy(success, this, promise),
-      Em.$.proxy(this.failure, this, promise)
+      Em.$.proxy(this.ajax_failure, this)
     );
   },
 
-  failure: function(promise, error){
-    Em.debug('Failed with: %@'.fmt(error.message));
+  ajax_failure: function(error){
+    var message;
+
+    if (Em.typeOf(error) === 'object' && (!!error.statusText || !!error.status)){
+      message = '%@ %@'.fmt(error.statusText, error.status);
+    } else if (!!error.message) {
+      message = error.message;
+    } else {
+      message = error;
+    }
+
+    Em.debug('Failed with %@'.fmt(message));
   },
 
   ajaxOptions: function(url, type, hash){
@@ -39,8 +56,8 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
   buildURL: function(type, query){
     'use strict';
     var url = [],
-        host = this.get('host'),
-        namespace = this.get('namespace'),
+        host = this.get('api_host'),
+        namespace = this.get('api_namespace'),
         blog_name = query.blog_name;
     delete query.blog_name;
 
@@ -82,8 +99,8 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
 
 if (!false){
   App.ApplicationAdapter.reopen({
-    host: 'http://api.tumblr.com',
-    namespace: 'v2',
+    api_host: 'http://api.tumblr.com',
+    api_namespace: 'v2',
     online: true
   });
 } else {
