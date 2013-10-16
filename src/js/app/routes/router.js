@@ -14,7 +14,11 @@ App.Router.reopen({
 });
 
 App.Router.map(function(){
+  // no-auth-required resources
   this.resource('authenticate', {path: '/auth'});
-  this.resource('dashboard', {path: '/'});
   this.resource('single_blog', {path: '/blog/*blog_name'});
+
+  // auth-required resources
+  this.resource('dashboard', {path: '/'});
+  this.resource('following');
 });

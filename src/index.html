@@ -73,6 +73,7 @@
                 <nav>
                     {{#link-to 'dashboard' class="btn btn-primary"}}Home{{/link-to}}
                     {{#if isAuthenticated}}
+                        {{#link-to 'following' class="btn btn-primary"}}Following{{/link-to}}
                         <button {{action "logout"}} class="btn btn-primary">Logout</button>
                     {{else}}
                         <button {{action "auth"}} class="btn btn-primary">Auth</button>
@@ -158,7 +159,9 @@
         <script type="text/x-handlebars" data-template-name="_text">
             <p>
                 <h3>{{{post.title}}}</h3>
-                {{{post.body}}}
+                <p>
+                    {{{post.body}}}
+                </p>
             </p>
         </script>
 
