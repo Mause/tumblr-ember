@@ -43,14 +43,14 @@ var App = Ember.Application.create({
   // LOG_VIEW_LOOKUPS: true,
   rootElement: 'body',
 
-  customEvents: {
-    scroll: 'scroll'
-  },
+  api_config: Ember.Object.create({
+    offset: 0,
+    limit: 5,
 
-  api_config: {
-    up_to: 0,
-    limit: 5
-  },
+    step: function(increment){
+      DS.Model.prototype.incrementProperty.call(this, 'offset', increment || this.limit);
+    }
+  }),
 
   API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'
 });
