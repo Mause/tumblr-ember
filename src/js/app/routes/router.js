@@ -21,4 +21,6 @@ App.Router.map(function(){
   // auth-required resources
   this.resource('dashboard', {path: '/'});
   this.resource('following');
+
+  this.resource('loading');
 });
