@@ -5,9 +5,7 @@ Ember.Handlebars.registerHelper('switch', function(options){
 
       context = (options.contexts && options.contexts.length) ? options.contexts[0] : this,
       normalized = Ember.Handlebars.normalizePath(context, attribute, options.data),
-      obj = normalized.root,
-
-      attr_val;
+      obj = normalized.root;
 
   Em.assert('You must provide both an obj and an attribute on that object', !!obj && !! attribute);
   Em.assert('The attribute path must contain a dot', io >= 0);
@@ -16,7 +14,7 @@ Ember.Handlebars.registerHelper('switch', function(options){
   attribute = attribute.substring(io + 1, attribute.length);
   Em.assert('The attribute must exist on the object', !!obj.get(attribute));
 
-  attr_val = obj.get(attribute);
+  var attr_val = obj.get(attribute);
   attr_val = mapping[attr_val] || attr_val;
 
   Ember.Handlebars.helpers.partial.call(this, attr_val, options);
