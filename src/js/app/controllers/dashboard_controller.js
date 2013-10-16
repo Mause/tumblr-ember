@@ -18,7 +18,7 @@ App.DashboardController = Em.ArrayController.extend({
         this.set('loadingFailed', false);
 
       // don't try to load more posts if we're already loading some;
-      // esssentially a purpose built debouncing mechanism
+      // essentially a purpose built debouncing mechanism
       if (this.get('isLoading') || this.get('loadingFailed')){
         return;
       }
