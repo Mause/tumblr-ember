@@ -9,6 +9,10 @@ App.DashboardController = Em.ArrayController.extend({
 
     loadMorePosts: function(resetLoadingFailed){
       'use strict';
+      var query, oldPostsOrig, oldPosts,
+          blog_name = this.get('controllers.application.metadata.name'),
+          api_config = this.namespace.api_config,
+          self = this;
 
       if (resetLoadingFailed)
         this.set('loadingFailed', false);
@@ -19,28 +23,18 @@ App.DashboardController = Em.ArrayController.extend({
         return;
       }
 
-      var oldPostsOrig = this.get('model'), oldPosts;
+      oldPostsOrig = this.get('model');
+      oldPosts = oldPostsOrig.get('content') || oldPostsOrig;
 
-      if (Em.typeOf(oldPosts) != 'array'){
-        oldPosts = oldPostsOrig.get('content');
-      } else {
-        oldPosts = oldPostsOrig;
-      }
-
-      var blog_name = this.get('controllers.application.metadata.name'),
-          self = this;
-
-      var query = {
+      query = {
         blog_name: blog_name,
-        offset: this.namespace.api_config.up_to,
-        limit: this.namespace.api_config.limit
+        offset: api_config.offset,
+        limit: api_config.limit
       };
-      this.namespace.api_config.up_to += this.namespace.api_config.limit;
-
+      api_config.step();
 
       Em.debug('Loading more posts...');
       this.set('isLoading', true);
-
 
       this.store.findQuery('post', query).then(
         Em.$.proxy(this.loadPostSuccess, this, oldPostsOrig),
