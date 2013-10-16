@@ -130,37 +130,8 @@
 
         <script type="text/x-handlebars" data-template-name="_post">
             {{! this amounts to a switch case }}
-            {{#if post.is.photo}}
-                {{partial 'photoset'}}
-            {{/if}}
 
-            {{#if post.is.quote}}
-                {{partial 'quote'}}
-            {{/if}}
-
-            {{#if post.is.video}}
-                {{partial 'video'}}
-            {{/if}}
-
-            {{#if post.is.text}}
-                {{partial 'text'}}
-            {{/if}}
-
-            {{#if post.is.answer}}
-                {{partial 'text'}}
-            {{/if}}
-
-            {{#if post.is.audio}}
-                {{partial 'audio'}}
-            {{/if}}
-
-            {{#if post.is.chat}}
-                {{partial 'chat'}}
-            {{/if}}
-
-            {{#if post.is.link}}
-                {{partial 'link'}}
-            {{/if}}
+            {{switch obj=post attribute='post.type'}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
