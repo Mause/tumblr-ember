@@ -51,6 +51,7 @@
 
         <script src="js/app/views/dashboard_view.js"></script>
         <script src="js/app/views/single_blog_view.js"></script>
+        <script src="js/app/views/loading_widget_view.js"></script>
 
         <script type="text/x-handlebars">
             <div class="container">
@@ -92,9 +93,11 @@
 
         <script type="text/x-handlebars" data-template-name="loading_route">
             <div class="row col-lg-12 well well-lg">
-                <h1>
-                    Loading...
-                </h1>
+                <div style="margin-right: auto; margin-left: auto;">
+                    <h1>
+                        {{view App.LoadingWidgetView}}
+                    </h1>
+                </div>
             </div>
         </script>
 
@@ -103,7 +106,7 @@
                 <footer class="row col-lg-12">
                     <h2 class="inner">
                         {{#if isLoading}}
-                            Loading...
+                            {{view App.LoadingWidgetView}}
                         {{/if}}
 
                         {{#if loadingFailed}}
@@ -130,8 +133,6 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="_post">
-            {{! this amounts to a switch case }}
-
             {{switch obj=post attribute='post.type'}}
         </script>
 
