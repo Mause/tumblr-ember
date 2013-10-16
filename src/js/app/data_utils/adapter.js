@@ -45,6 +45,8 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
     }
 
     Em.debug('Failed with %@'.fmt(message));
+
+    return error.detail;
   },
 
   ajaxOptions: function(url, type, hash){
