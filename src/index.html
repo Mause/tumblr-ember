@@ -148,8 +148,8 @@
                     <div>
                         {{#each sub_photo in row.content}}
                             <img {{bind-attr src=sub_photo.url
-                                             width=sub_photo.width
-                                             style=row.widthString}}
+                                             height=sub_photo.height
+                                             width=row.width}}
                                 ></img>
                                 {{! height=sub_photo.height}}
                             {{caption}}
