@@ -1,5 +1,5 @@
 App.SubPhoto = DS.Model.extend({
-  caption: DS.attr('string'),
+  caption: DS.attr('tumblr_string'),
 
   // original_size: DS.belongsTo('sub_photo_instance'),
   alt_sizes: DS.hasMany('sub_photo_instance', {embedded: true}),

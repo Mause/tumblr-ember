@@ -1,5 +1,5 @@
 App.Audio = DS.Model.extend(App.PostMixin, {
-  caption: DS.attr('string'),
+  caption: DS.attr('tumblr_string'),
   player: DS.attr('string'),
   plays: DS.attr('number'),
   album_art: DS.attr('string'),

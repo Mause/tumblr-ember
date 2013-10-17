@@ -1,6 +1,6 @@
 App.Photo = DS.Model.extend(App.PostMixin, {
   photos: DS.hasMany('sub_photo', {embedded: true}),
-  caption: DS.attr('string'),
+  caption: DS.attr('tumblr_string'),
   photoset_layout: DS.attr('string'),
 
   widthString: function(){
