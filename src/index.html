@@ -27,6 +27,7 @@
         <script src="js/app/routes/dashboard_route.js"></script>
         <script src="js/app/routes/single_blog_route.js"></script>
         <script src="js/app/routes/application_route.js"></script>
+        <script src="js/app/routes/loading_route.js"></script>
 
         <script src="js/app/data_utils/store.js"></script>
         <script src="js/app/data_utils/transforms.js"></script>
@@ -92,18 +93,22 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="loading_route">
-            <div class="row col-lg-12 well well-lg">
-                <div style="margin-right: auto; margin-left: auto;">
-                    <h1>
-                        {{view App.LoadingWidgetView}}
-                    </h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 well well-lg">
+                        <div style="margin-right: auto; margin-left: auto;">
+                            <h1>
+                                {{view App.LoadingWidgetView}}
+                            </h1>
+                        </div>
+                    </div>
                 </div>
             </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="_loading_posts">
-            <div>
-                <footer class="row col-lg-12">
+            <div class="row">
+                <footer class="col-lg-12">
                     <h2 class="inner">
                         {{#if isLoading}}
                             {{view App.LoadingWidgetView}}
