@@ -1,36 +1,34 @@
 App.LoadingWidgetView = Em.View.extend({
-  template: Ember.Handlebars.compile('Loading{{view.ellipses}}'),
-  ellipses: '',
-  num_ellipses: 0,
-  timeoutId: null,
+  template: Ember.Handlebars.compile('Loading{{view._ticker}}'),
+
+  tickerChar: '.',
+  tickerLength: 3,
+
+  _ticker: '',
+  _timeoutId: null,
 
   didInsertElement: function(){
-    var id = setInterval(
+    this.set('_timeoutId', setInterval(
       Em.$.proxy(this.tick, this),
       750
-    );
-
-    this.set('timeoutId', id);
+    ));
   },
 
   tick: function(){
     if (this.get('isDestroyed') || this.get('isDestroying')){
-      clearInterval(this.get('timeoutId'));
-      return;
+      return this.clear();
     }
 
-    this.set('num_ellipses', (this.get('num_ellipses') + 1) % 4);
+    var state = (this.get('_ticker').length + 1) % (this.get('tickerLength') + 1),
+        ticker = Array(state + 1).join(this.get('tickerChar'));
 
-    var out = '';
-    for (var i=0; i<this.get('num_ellipses'); i++){
-      out += '.';
-    }
-    this.set('ellipses', out);
+    this.set('_ticker', ticker);
   },
 
-  willRemoveElement: function(){
-    debugger;
-    if (!Em.isNone(this.get('timeoutId')))
-      clearInterval(this.get('timeoutId'));
+  willRemoveElement: Em.aliasMethod('clear'),
+
+  clear: function(){
+    if (!Em.isNone(this.get('_timeoutId')))
+      return clearInterval(this.get('_timeoutId'));
   }
 });
