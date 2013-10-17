@@ -1,4 +1,10 @@
 App.DashboardRoute = Em.Route.extend({
+  namespace: null,
+
+  init: function(){
+    this.namespace = this.router.namespace;
+  },
+
   beforeModel: function(){
     if (!this.router.get('isAuthenticated')){
       this.transitionTo('authenticate');
@@ -6,8 +12,7 @@ App.DashboardRoute = Em.Route.extend({
   },
 
   model: function() {
-    var namespace = this.router.namespace;
-    namespace.api_config.offset += namespace.api_config.limit;
+    this.namespace.api_config.offset += this.namespace.api_config.limit;
 
     return this.store.findQuery('post', {
       limit: namespace.api_config.limit
@@ -19,7 +24,7 @@ App.DashboardRoute = Em.Route.extend({
   },
 
   deactivate: function() {
-    namespace.api_config.offset = 0;
+    this.namespace.api_config.offset = 0;
     this.store.unloadAllRecords();
   },
 
