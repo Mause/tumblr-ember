@@ -44,23 +44,23 @@ App.DashboardController = Em.ArrayController.extend({
   },
 
   loadPostFailure: function(){
-    this.set('isLoading', false);
-    this.set('loadingFailed', true);
+    this.setProperties({
+      'isLoading': false,
+      'loadingFailed': true
+    });
     Em.debug('Loading posts failed.');
   },
 
   loadPostSuccess: function(oldPosts, newPosts){
-    Em.debug('oldPosts: %@, newPosts: %@'.fmt(oldPosts.get('length'), newPosts.get('length')));
-
     var combined = oldPosts.addObjects(newPosts);
+
+    this.setProperties({
+      'model': combined,
+      'isLoading': false,
+      'loadingFailed': false
+    });
 
     Em.debug('Loading posts succeeded. Displaying %@ posts altogether'.fmt(
       combined.get('length')));
-
-    this.set('model', combined);
-    this.set('isLoading', false);
-
-    // to be sure, to be sure
-    this.set('loadingFailed', false);
   }
 });
