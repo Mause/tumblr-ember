@@ -15,17 +15,21 @@ App.TumblrStringTransform = DS.StringTransform.extend({
   deserialize: function(serialized){
     'use strict';
     var deserialized = this._super(serialized),
-        self = this, url;
+        self = this,
+        router = this.container.lookup('router:main'), url;
 
     // return if null
     if (Ember.isNone(deserialized))
       return null;
 
     // reformat tumblr urls appropriately
-    return deserialized.replace(/http:\/\/([^\.]*.tumblr.com)/g, function(orig, s){
-        url = /([^\.]*).*/g.exec(s);
+    return deserialized.replace(/href="http:\/\/([^\.]*).tumblr.com\/([^"]*)"/g, function(orig, blog_name, path, idx, full){
+      url = router.router.recognizer.generate('single_blog', {blog_name: blog_name});
+      url = router.get('location').formatURL(url);
 
-        return Em.isNone(url) ? s : '/#/blog/%@'.fmt(url[1]);
+      if (url.charAt(0) !== '/') { url = '/' + url; }
+
+      return 'href="%@"'.fmt(url);
     });
   }
 });
