@@ -7,7 +7,6 @@ Ember.RSVP.configure('onerror', function(e) {
 });
 
 Ember.RSVP.configure('async', function(func){
-  // debugger;
   var args = Array.prototype.slice.call(arguments, 1);
   return func.apply(this, args);
 });
@@ -34,6 +33,7 @@ Ember.Application.reopen({
   }.property(),
 });
 
+
 var App = Ember.Application.create({
   title: 'Tumblr Ember',
   author: 'Dominic May (http://mause.me)',
@@ -42,6 +42,7 @@ var App = Ember.Application.create({
   // LOG_TRANSITIONS_INTERNAL: true,
   // LOG_VIEW_LOOKUPS: true,
   rootElement: 'body',
+  API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA',
 
   api_config: Ember.Object.create({
     offset: 0,
@@ -52,7 +53,7 @@ var App = Ember.Application.create({
     }
   }),
 
-  API_KEY: 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA'
+  lk: function(){ return App.__container__.lookup.apply(App.__container__, arguments); }
 });
 
 
@@ -61,7 +62,7 @@ Em.aliasAction = function(actionName){
       predefined_args = [actionName].concat(a_slice.call(arguments, 1));
 
   return function(){
-    var args = predefined_args.concat(a_slice(arguments));
+    var args = predefined_args.concat(a_slice.call(arguments));
 
     return this.send.apply(this, args);
   };
