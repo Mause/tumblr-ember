@@ -135,12 +135,7 @@
         <script type="text/x-handlebars" data-template-name="post_stream">
             {{#each post in controller}}
                 <div class="post row">
-                    <div class="col-lg-1 well well-lg avatar">
-                        <img width="50" height="50"/>
-                    </div>
-                    <div class="col-lg-11 well well-lg post-content">
-                        {{partial 'single_post'}}
-                    </div>
+                    {{partial 'single_post'}}
                 </div>
             {{/each}}
 
@@ -148,7 +143,12 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="_single_post">
-            {{switch attr=post.type}}
+            <div class="col-lg-1 well well-lg avatar">
+                <img width="50" height="50"/>
+            </div>
+            <div class="col-lg-11 well well-lg post-content" {{bind-attr post_type=post.type}}>
+                {{switch attr=post.type}}
+            </div>
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
@@ -183,7 +183,9 @@
 
         <script type="text/x-handlebars" data-template-name="_text">
             <p>
-                <h3>{{{post.title}}}</h3>
+                {{#if post.title}}
+                    <h3>{{{post.title}}}</h3>
+                {{/if}}
                 <p>
                     {{{post.body}}}
                 </p>
