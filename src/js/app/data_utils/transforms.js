@@ -26,8 +26,6 @@ App.TumblrStringTransform = DS.StringTransform.extend({
     return deserialized.replace(/href="http:\/\/([^\.]*).tumblr.com\/([^"]*)"/g, function(orig, blog_name, path, idx, full){
       if (!Em.isEmpty(path)){
         path = /post\/(\d+)\/(.*)?/.exec(path);
-
-
         var post_ident = path[1],
             post_slug = path[2];
 
@@ -40,8 +38,6 @@ App.TumblrStringTransform = DS.StringTransform.extend({
       } else {
         url = router.router.recognizer.generate('single_blog', {blog_name: blog_name});
       }
-
-      console.log('%@ -> %@'.fmt(orig.split('"')[1], url));
 
       url = router.get('location').formatURL(url);
       if (url.charAt(0) !== '/') { url = '/' + url; }
