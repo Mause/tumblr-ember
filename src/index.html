@@ -111,11 +111,11 @@
                 <footer class="col-lg-12">
                     <h2 class="inner">
                         {{#if isLoading}}
-                            {{view App.LoadingWidgetView}}
+                            {{loading-widget}}
                         {{/if}}
 
                         {{#if loadingFailed}}
-                            Loading failed. <a {{action 'tryAgain'}}>Try again?</a>
+                            Loading failed. <a {{action 'tryAgain'}} class="clickable">Try again?</a>
                         {{/if}}
                     </h2>
                 </footer>

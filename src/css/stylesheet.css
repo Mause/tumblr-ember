@@ -28,3 +28,7 @@ nav {
 .post-content {
   width: 90% !important;
 }
+
+.clickable {
+  cursor: pointer;
+}
