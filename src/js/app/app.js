@@ -16,7 +16,6 @@ Ember.RSVP.configure('async', function(func){
 // Ember.STRUCTURED_PROFILE = true;
 
 Ember.LOG_VERSION = true;
-Ember.ENV.RAISE_ON_DEPRECATION = true;
 Ember.LOG_STACKTRACE_ON_DEPRECATION = true;
 Ember.DEBUG = true;
 

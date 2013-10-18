@@ -6,12 +6,7 @@
   margin-right: 10px;
 }
 
-.footer {
-  width: 100px;
-  border-top: solid black 2px;
-}
-
-.footer.inner {
+footer.inner {
   margin-left: auto;
   margin-right: auto;
 }
