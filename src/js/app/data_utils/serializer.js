@@ -1,5 +1,6 @@
 App.ApplicationSerializer = DS.RESTSerializer.extend({
-  extractMeta: function(store, type, payload){},
+  // we want to extract the metadata later, so we override
+  extractMeta: Em.K,
 
   generateIds: function(records, parent_id) {
     for (var i=0; i<records.length; i++) {
@@ -9,17 +10,20 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
   },
 
   extractArray: function(store, type, payload, id, requestType) {
-    var metadata = payload.meta;
-    metadata.blog = payload.response.blog;
-    delete payload.meta;
-    delete payload.response.blog;
+    var metadata;
+    if (!Em.isNone(payload)){
+      metadata = payload.meta;
+      metadata.blog = payload.response.blog;
+      delete payload.meta;
+      delete payload.response.blog;
+    }
 
     payload = this.splitPostArray(store, type, payload, id, requestType);
     payload = this.extractEmbedded(store, type, payload, id, requestType);
     payload = this.normalizeArray(store, type, payload, id, requestType);
     payload = this.transmogrify(store, type, payload, id, requestType);
 
-    payload.metadata = metadata;
+    payload.metadata = metadata || {};
     return payload;
   },
 
