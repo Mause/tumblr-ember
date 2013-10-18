@@ -5,6 +5,13 @@
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 
+        <script>
+            window.ENV = {
+                ENABLE_ALL_FEATURES: true,
+                RAISE_ON_DEPRECATION: true
+            };
+        </script>
+
         <script src="js/libs/jquery.js"></script>
         <script src="js/libs/jquery.cookie.js"></script>
         <script src="js/libs/handlebars.js"></script>
@@ -143,16 +150,10 @@
 
         <script type="text/x-handlebars" data-template-name="_photoset">
             <div>
-             {{!bind-attr style=post.widthString}}
                 {{#each row in post.sized_rows}}
                     <div>
                         {{#each sub_photo in row.content}}
-                            <img {{bind-attr src=sub_photo.url
-                                             height=sub_photo.height
-                                             width=row.width}}
-                                ></img>
-                                {{! height=sub_photo.height}}
-                            {{caption}}
+                            {{partial 'sub_photo'}}
                         {{/each}}
                     </div>
                 {{/each}}
@@ -160,6 +161,20 @@
                     {{{post.caption}}}
                 </p>
             </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_sub_photo">
+            <figure>
+                <div>
+                    <img {{bind-attr src=sub_photo.url
+                                     height=sub_photo.height
+                                     width=row.width}}
+                        ></img>
+                </div>
+                <figcaption>
+                    {{caption}}
+                </figcaption>
+            </figure>
         </script>
 
         <script type="text/x-handlebars" data-template-name="_text">
