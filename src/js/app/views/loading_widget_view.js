@@ -5,30 +5,26 @@ App.LoadingWidgetView = Em.View.extend({
   tickerLength: 3,
 
   _ticker: '',
-  _timeoutId: null,
 
-  didInsertElement: function(){
-    this.set('_timeoutId', setInterval(
+  didInsertElement: Em.aliasMethod('schedule'),
+  schedule: function(){
+    Ember.run.later(this,
       Em.$.proxy(this.tick, this),
       750
-    ));
+    );
   },
 
   tick: function(){
-    if (this.get('isDestroyed') || this.get('isDestroying')){
-      return this.clear();
-    }
+    if (this.get('isDestroyed') || this.get('isDestroying')){ return; }
 
-    var state = (this.get('_ticker').length + 1) % (this.get('tickerLength') + 1),
-        ticker = Array(state + 1).join(this.get('tickerChar'));
+    var _ticker = this.get('_ticker'),
+        tickerLength = this.get('tickerLength'),
+        tickerChar = this.get('tickerChar'),
+
+        state = (_ticker.length + 1) % (tickerLength + 1),
+        ticker = Array(state + 1).join(tickerChar);
 
     this.set('_ticker', ticker);
+    this.schedule();
   },
-
-  willRemoveElement: Em.aliasMethod('clear'),
-
-  clear: function(){
-    if (!Em.isNone(this.get('_timeoutId')))
-      return clearInterval(this.get('_timeoutId'));
-  }
 });
