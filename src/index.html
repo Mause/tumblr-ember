@@ -148,10 +148,8 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="single_post">
-            {{! purely for the single_post route }}
-            {{#with controller.post as post}}
-                {{partial 'single_post'}}
-            {{/with}}
+            {{! essentially a proxy}}
+            {{partial 'single_post'}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_single_post">
