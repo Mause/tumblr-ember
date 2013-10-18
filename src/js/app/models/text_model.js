@@ -1,4 +1,4 @@
 App.Text = DS.Model.extend(App.PostMixin, {
-  title: DS.attr('string'),
-  body: DS.attr('string'),
+  title: DS.attr('tumblr_string'),
+  body: DS.attr('tumblr_string'),
 });
