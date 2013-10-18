@@ -33,6 +33,7 @@
         <script src="js/app/routes/router.js"></script>
         <script src="js/app/routes/dashboard_route.js"></script>
         <script src="js/app/routes/single_blog_route.js"></script>
+        <script src="js/app/routes/single_post_route.js"></script>
         <script src="js/app/routes/application_route.js"></script>
         <script src="js/app/routes/loading_route.js"></script>
 
@@ -56,10 +57,12 @@
         <script src="js/app/controllers/application_controller.js"></script>
         <script src="js/app/controllers/dashboard_controller.js"></script>
         <script src="js/app/controllers/single_blog_controller.js"></script>
+        <script src="js/app/controllers/single_post_controller.js"></script>
 
         <script src="js/app/views/dashboard_view.js"></script>
         <script src="js/app/views/single_blog_view.js"></script>
-        <script src="js/app/views/loading_widget_view.js"></script>
+
+        <script src="js/app/components/loading_widget_component.js"></script>
 
         <script type="text/x-handlebars">
             <div class="container">
@@ -105,7 +108,7 @@
                     <div class="col-lg-12 well well-lg">
                         <div style="margin-right: auto; margin-left: auto;">
                             <h1>
-                                {{view App.LoadingWidgetView}}
+                                {{loading-widget}}
                             </h1>
                         </div>
                     </div>
@@ -144,7 +147,13 @@
             {{partial 'loading_posts'}}
         </script>
 
-        <script type="text/x-handlebars" data-template-name="_post">
+        <script type="text/x-handlebars" data-template-name="single_post">
+            {{#with controller.post as post}}
+                {{partial 'single_post'}}
+            {{/with}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_single_post">
             {{switch attr=post.type}}
         </script>
 
