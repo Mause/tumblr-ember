@@ -24,7 +24,7 @@ App.TumblrStringTransform = DS.StringTransform.extend({
     'use strict';
     var deserialized = this._super(serialized),
         self = this,
-        router = this.container.lookup('router:main'), url;
+        router = this.container.lookup('router:main');
 
     // return if null
     if (Ember.isNone(deserialized))
@@ -32,24 +32,13 @@ App.TumblrStringTransform = DS.StringTransform.extend({
 
     // reformat tumblr urls appropriately
     return deserialized.replace(/href="http:\/\/([^\.]*).tumblr.com\/([^"]*)"/g, function(orig, blog_name, path, idx, full){
-      var type, data;
-      if (!Em.isEmpty(path)){
-        path = /post\/(\d+)\/?(.*)?/.exec(path);
-        var post_ident = path[1],
-            post_slug = path[2];
+      var split_path = Em.isEmpty(path) ? undefined : split_path = /post\/(\d+)\/?(.*)?/.exec(path);
 
-          type = 'single_post';
-          data = {
-            blog_name: blog_name,
-            post_ident: post_ident,
-            post_slug: post_slug
-          };
-      } else {
-        type = 'single_blog';
-        data = {blog_name: blog_name};
-      }
-
-      url = router.generate(type, data);
+      var url = router.generate(Em.isEmpty(path) ? 'single_blog' : 'single_post', {
+          blog_name: blog_name,
+          post_ident: split_path[1],
+          post_slug: split_path[2]
+        });
       return 'href="%@"'.fmt(url);
     });
   }
