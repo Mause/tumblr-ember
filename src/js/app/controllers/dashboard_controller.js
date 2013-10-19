@@ -7,7 +7,6 @@ App.DashboardController = Em.ArrayController.extend({
     scroll: Em.aliasAction('loadMorePosts').debounce(100),
     tryAgain: function(){
       this.set('loadingFailed', false);
-      debugger;
       this.send('loadMorePosts');
     },
 
