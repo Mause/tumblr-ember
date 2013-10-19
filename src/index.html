@@ -75,11 +75,7 @@
         <script type="text/x-handlebars" data-template-name="_header">
             <header class="row col-lg-12">
                 <h1>
-                    Tumblr Ember
-
-                    {{#if controller.metadata.title}}
-                        - {{controller.metadata.title}}
-                    {{/if}}
+                    {{namespace.document_title}}
                 </h1>
 
                 <nav>
@@ -88,7 +84,7 @@
                         {{#link-to 'following' class="btn btn-primary"}}Following{{/link-to}}
                         <button {{action "logout"}} class="btn btn-primary">Logout</button>
                     {{else}}
-                        <button {{action "auth"}} class="btn btn-primary">Auth</button>
+                        {{#link-to 'authenticate' class="btn btn-primary"}}Auth{{/link-to}}
                     {{/if}}
                 </nav>
             </header>

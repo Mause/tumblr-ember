@@ -29,6 +29,7 @@ Ember.Application.reopen({
     Ember.run.once(function(){
       document.title = value;
     });
+    return value;
   }.property(),
 });
 
