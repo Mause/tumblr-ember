@@ -49,10 +49,7 @@ App.TumblrStringTransform = DS.StringTransform.extend({
         data = {blog_name: blog_name};
       }
 
-      url = router.router.recognizer.generate(type, data);
-      url = router.get('location').formatURL(url);
-      if (url.charAt(0) !== '/') { url = '/' + url; }
-
+      url = router.generate(type, data);
       return 'href="%@"'.fmt(url);
     });
   }
