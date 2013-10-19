@@ -23,8 +23,9 @@ footer.inner {
   margin-left: auto;
   margin-right: auto;
 }
+
 hr {
-  border-top: 1px solid #E3E3E3;
+  border-top: 1px solid #E3E3E3 !important;
 }
 
 nav {
