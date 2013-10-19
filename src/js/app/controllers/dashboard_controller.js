@@ -5,17 +5,18 @@ App.DashboardController = Em.ArrayController.extend({
 
   actions: {
     scroll: Em.aliasAction('loadMorePosts').debounce(100),
-    tryAgain: Em.aliasAction('loadMorePosts', true),
+    tryAgain: function(){
+      this.set('loadingFailed', false);
+      debugger;
+      this.send('loadMorePosts');
+    },
 
-    loadMorePosts: function(resetLoadingFailed){
+    loadMorePosts: function(){
       'use strict';
       var query, oldPostsOrig, oldPosts,
           blog_name = this.get('controllers.application.metadata.name'),
           api_config = this.namespace.api_config,
           self = this;
-
-      if (resetLoadingFailed)
-        this.set('loadingFailed', false);
 
       // don't try to load more posts if we're already loading some;
       // essentially a purpose built debouncing mechanism
@@ -28,10 +29,9 @@ App.DashboardController = Em.ArrayController.extend({
 
       query = {
         blog_name: blog_name,
-        offset: api_config.offset,
+        offset: api_config.next_offset(),
         limit: api_config.limit
       };
-      api_config.step();
 
       Em.debug('Loading more posts...');
       this.set('isLoading', true);

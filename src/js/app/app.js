@@ -47,8 +47,10 @@ var App = Ember.Application.create({
     offset: 0,
     limit: 5,
 
-    step: function(increment){
-      DS.Model.prototype.incrementProperty.call(this, 'offset', increment || this.limit);
+    next_offset: function(increment){
+      var orig = this.get('offset');
+      this.set('offset', offset + (increment || this.get('limit')));
+      return orig;
     }
   }),
 
