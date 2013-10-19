@@ -31,13 +31,13 @@ App.TumblrStringTransform = DS.StringTransform.extend({
       return null;
 
     // reformat tumblr urls appropriately
-    return deserialized.replace(/href="http:\/\/([^\.]*).tumblr.com\/([^"]*)"/g, function(orig, blog_name, path, idx, full){
-      var split_path = Em.isEmpty(path) ? undefined : split_path = /post\/(\d+)\/?(.*)?/.exec(path);
+    return deserialized.replace(/href="http:\/\/([^\.]*).tumblr.com\/?([^"]*)"/g, function(orig, blog_name, path, idx, full){
+      var split_path = Em.isEmpty(path) ? {} : /post\/(\d+)\/?(.*)?/.exec(path);
 
       var url = router.generate(Em.isEmpty(path) ? 'single_blog' : 'single_post', {
           blog_name: blog_name,
-          post_ident: split_path[1],
-          post_slug: split_path[2]
+          post_ident: split_path[1] || '',
+          post_slug: split_path[2] || ''
         });
       return 'href="%@"'.fmt(url);
     });
