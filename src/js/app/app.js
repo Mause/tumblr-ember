@@ -50,7 +50,7 @@ var App = Ember.Application.create({
 
     next_offset: function(increment){
       var orig = this.get('offset');
-      this.set('offset', offset + (increment || this.get('limit')));
+      this.set('offset', orig + (increment || this.get('limit')));
       return orig;
     }
   }),
