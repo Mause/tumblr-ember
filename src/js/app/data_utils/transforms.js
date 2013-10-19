@@ -35,10 +35,10 @@ App.TumblrStringTransform = DS.StringTransform.extend({
       var split_path = Em.isEmpty(path) ? {} : /post\/(\d+)\/?(.*)?/.exec(path);
 
       var url = router.generate(Em.isEmpty(path) ? 'single_blog' : 'single_post', {
-          blog_name: blog_name,
-          post_ident: split_path[1] || '',
-          post_slug: split_path[2] || ''
-        });
+        blog_name: blog_name,
+        post_ident: split_path[1] || '',
+        post_slug: split_path[2] || ''
+      });
       return 'href="%@"'.fmt(url);
     });
   }
