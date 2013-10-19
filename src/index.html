@@ -144,6 +144,14 @@
             </div>
             <div class="col-lg-11 well well-lg post-content" {{bind-attr post_type=post.type}}>
                 {{switch attr=post.type}}
+                <hr/>
+                {{tag-list post=post}}
+            </div>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="components/tag-list">
+            <div {{bind-attr title=post.str_tags}}>
+                {{post.timestamp}}
             </div>
         </script>
 

@@ -16,6 +16,10 @@ App.PostMixin = Ember.Mixin.create({
     total_posts: DS.attr('number'), // The total number of post available for this request, useful for paginating through results
     note_count: DS.attr('number'),
 
+    str_tags: function(){
+        return this.get('tags').join(', ');
+    }.property('tags'),
+
     is: function(){
         // anything other than our type that is requested returns undefined,
         // which, via the isTruthy mechanism, becomes false
