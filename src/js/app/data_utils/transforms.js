@@ -7,9 +7,17 @@ App.RawTransform = DS.Transform.extend({
   }
 });
 
-App.ArrayTransform = App.RawTransform.extend({});
-App.TimestampTransform = DS.NumberTransform.extend({});
+App.ArrayTransform = App.RawTransform.extend();
 App.ChoiceTransform = DS.StringTransform.extend();
+
+App.TimestampTransform = DS.DateTransform.extend({
+  serialize: function(){
+    return serialized.getSeconds() / 1000;
+  },
+  deserialize: function(serialized){
+    return new Date(serialized * 1000);
+  }
+});
 
 App.TumblrStringTransform = DS.StringTransform.extend({
   deserialize: function(serialized){
@@ -24,21 +32,24 @@ App.TumblrStringTransform = DS.StringTransform.extend({
 
     // reformat tumblr urls appropriately
     return deserialized.replace(/href="http:\/\/([^\.]*).tumblr.com\/([^"]*)"/g, function(orig, blog_name, path, idx, full){
+      var type, data;
       if (!Em.isEmpty(path)){
         path = /post\/(\d+)\/?(.*)?/.exec(path);
         var post_ident = path[1],
             post_slug = path[2];
 
-        url = router.router.recognizer.generate('single_post', {
-          blog_name: blog_name,
-          post_ident: post_ident,
-          post_slug: post_slug
-        });
-
+          type = 'single_post';
+          data = {
+            blog_name: blog_name,
+            post_ident: post_ident,
+            post_slug: post_slug
+          };
       } else {
-        url = router.router.recognizer.generate('single_blog', {blog_name: blog_name});
+        type = 'single_blog';
+        data = {blog_name: blog_name};
       }
 
+      url = router.router.recognizer.generate(type, data);
       url = router.get('location').formatURL(url);
       if (url.charAt(0) !== '/') { url = '/' + url; }
 
