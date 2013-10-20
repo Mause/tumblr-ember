@@ -17,6 +17,7 @@
         <script src="js/libs/handlebars.js"></script>
         <script src="js/libs/underscore.js"></script>
         <script src="js/libs/oauth.js"></script>
+        <script src="js/libs/bootstrap.js"></script>
 
         <script src="js/libs/ember.js"></script>
         <script src="js/libs/ember-data.js"></script>
@@ -63,6 +64,7 @@
         <script src="js/app/views/single_blog_view.js"></script>
 
         <script src="js/app/components/loading_widget_component.js"></script>
+        <script src="js/app/components/tooltip_component.js"></script>
 
         <script type="text/x-handlebars">
             <div class="container">
@@ -150,9 +152,13 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="components/tag-list">
-            <div {{bind-attr title=post.str_tags}}>
+            {{#bootstrap-tooltip title=post.tooltip_tags html='yes'}}
                 {{post.timestamp}}
-            </div>
+            {{/bootstrap-tooltip}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="bootstrap-tooltip">
+            {{yield}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">

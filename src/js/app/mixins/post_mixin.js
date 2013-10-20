@@ -16,8 +16,8 @@ App.PostMixin = Ember.Mixin.create({
     total_posts: DS.attr('number'), // The total number of post available for this request, useful for paginating through results
     note_count: DS.attr('number'),
 
-    str_tags: function(){
-        return this.get('tags').join(', ');
+    tooltip_tags: function(){
+        return this.get('tags').join(', <br/>');
     }.property('tags'),
 
     is: function(){
