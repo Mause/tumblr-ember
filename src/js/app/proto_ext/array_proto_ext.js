@@ -23,11 +23,3 @@ Ember.Enumerable.reopen({
   sum: Array.prototype.sum,
   sortBy: Array.prototype.sortBy
 });
-
-Function.prototype.debounce = function(time){
-  var func = this;
-
-  return function(){
-    Em.run.debounce(this, func, time);
-  };
-};
