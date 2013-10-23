@@ -1,6 +1,6 @@
 App.AuthenticateRoute = Em.Route.extend({
   beforeModel: function() {
-    if (this.router.get('isAuthenticated')){
+    if (this.router.namespace.AuthManager.isAuthenticated()){
       this.transitionTo('dashboard');
     }
   }

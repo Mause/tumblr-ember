@@ -15,7 +15,7 @@ App.DashboardRoute = Em.Route.extend({
     this.namespace.api_config.offset += this.namespace.api_config.limit;
 
     return this.store.findQuery('post', {
-      limit: namespace.api_config.limit
+      limit: this.namespace.api_config.limit
     });
   },
 
