@@ -1,11 +1,3 @@
-Array.prototype.sortBy = function(key){
-  var get = Ember.get;
-
-  return this.sort(function(a, b){
-    return get(a, key) > get(b, key);
-  });
-};
-
 Array.prototype.sum = function(){
   return this.reduce(function(a, b){
     return a + b;
@@ -18,8 +10,14 @@ Array.prototype.toInts = function(){
   });
 };
 
+Array.prototype.all = function(){
+  return this.every(function(x){
+    return !!x;
+  });
+};
+
 Ember.Enumerable.reopen({
   toInts: Array.prototype.toInts,
   sum: Array.prototype.sum,
-  sortBy: Array.prototype.sortBy
+  all: Array.prototype.all
 });

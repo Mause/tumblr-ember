@@ -1,7 +1,7 @@
 App.utils = {
   _mend_url: function(url) {
-    var router = App.lk('router:main'),
-        parsed_url = App.utils._url_regex.exec(url);
+    var router = App.__container__.lookup('router:main'),
+        parsed_url = /http:\/\/([^\.]*).tumblr.com(?:\/post\/(\d+)\/?([a-z0-9\-]*))?/g.exec(url);
 
     if (!parsed_url) return url;
 
@@ -16,9 +16,5 @@ App.utils = {
     return str.replace(/href="([^"]*)"/g, function(orig, url){
       return 'href="%@"'.fmt(App.utils._mend_url(url));
     });
-  },
-
-  _url_regex: /http:\/\/([^\.]*).tumblr.com(?:\/post\/(\d+)\/?(.*))?/g
+  }
 };
-
-Em.String.mend_urls = String.prototype.mend_urls = App.utils.mend_urls;
