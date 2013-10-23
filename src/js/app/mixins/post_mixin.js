@@ -16,9 +16,24 @@ App.PostMixin = Ember.Mixin.create({
     total_posts: DS.attr('number'), // The total number of post available for this request, useful for paginating through results
     note_count: DS.attr('number'),
 
+    avatar_url: function(){
+        return 'http://api.tumblr.com/v2/blog/%@.tumblr.com/avatar'.fmt(this.get('blog_name'))
+    }.property('blog_name'),
+
     tooltip_tags: function(){
         return this.get('tags').join(', <br/>');
     }.property('tags'),
+
+    tumblrized: function(){
+        var out = {}, self = this;
+
+        this.eachAttribute(function(name, meta){
+            if (meta.type === 'string')
+                out[name] = App.utils._mend_url(self.get(name));
+        });
+
+        return out;
+    }.property().volatile(),
 
     is: function(){
         // anything other than our type that is requested returns undefined,
