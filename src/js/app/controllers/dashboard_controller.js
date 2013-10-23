@@ -4,17 +4,27 @@ App.DashboardController = Em.ArrayController.extend({
   needs: ['application'],
 
   actions: {
-    scroll: Em.aliasAction('loadMorePosts').debounce(100),
+    scroll: Em.aliasAction('loadPosts').debounce(100),
     tryAgain: function(){
       this.set('loadingFailed', false);
-      this.send('loadMorePosts');
+      this.send('loadPosts');
     },
 
-    loadMorePosts: function(){
+    loadNew: function(){
+      var model = this.get('model'),
+          oldPosts = (model.get('content') || model).sortBy('timestamp').reverse();
+
+      this.send('loadPosts', {
+        since_id: oldPosts.objectAt(0).get('id')
+      });
+    },
+
+    loadPosts: function(query){
       'use strict';
-      var query, oldPostsOrig, oldPosts,
+      var oldPosts,
           blog_name = this.get('controllers.application.metadata.name'),
           api_config = this.namespace.api_config,
+          query = query || {},
           self = this;
 
       // don't try to load more posts if we're already loading some;
@@ -23,20 +33,20 @@ App.DashboardController = Em.ArrayController.extend({
         return;
       }
 
-      oldPostsOrig = this.get('model');
-      oldPosts = oldPostsOrig.get('content') || oldPostsOrig;
+      oldPosts = this.get('model');
+      oldPosts = oldPosts.get('content') || oldPosts;
 
-      query = {
+      Em.merge(query, {
         blog_name: blog_name,
         offset: api_config.next_offset(),
         limit: api_config.limit
-      };
+      });
 
       Em.debug('Loading more posts...');
       this.set('isLoading', true);
 
       this.store.findQuery('post', query).then(
-        Em.$.proxy(this.loadPostSuccess, this, oldPostsOrig),
+        Em.$.proxy(this.loadPostSuccess, this, oldPosts),
         Em.$.proxy(this.loadPostFailure, this)
       );
     }
@@ -54,7 +64,7 @@ App.DashboardController = Em.ArrayController.extend({
     var combined = oldPosts.addObjects(newPosts);
 
     this.setProperties({
-      'model': combined,
+      'model': combined.sortBy('timestamp').reverse(),
       'isLoading': false,
       'loadingFailed': false
     });

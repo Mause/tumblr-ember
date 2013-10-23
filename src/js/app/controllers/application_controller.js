@@ -1,9 +1,14 @@
 App.ApplicationController = Em.Controller.extend({
   metadata: null,
+  needs: ['dashboard', 'single_post', 'single_blog'],
 
   init: function(){
     this.namespace.set('document_title', this.namespace.title);
   },
+
+  show_load_new: function(){
+    return this.get('currentRouteName') !== 'authenticate';
+  }.property('currentRouteName'),
 
   metadata_watcher: function(){
     'use strict';
@@ -13,5 +18,12 @@ App.ApplicationController = Em.Controller.extend({
     if (!!metadata.title){ title += ' - %@'.fmt(metadata.title); }
     this.namespace.set('document_title', title);
 
-  }.observes('metadata')
+  }.observes('metadata'),
+
+  actions: {
+    loadNew: function(){
+      var controller = this.get('controllers').unknownProperty(this.currentRouteName);
+      controller.send('loadNew');
+    }
+  }
 });
