@@ -1,9 +1,12 @@
 App.Store = DS.Store.extend({
-  findQuery: function(type, id){
-    id = id || {};
-    id.api_key = App.API_KEY;
+  findQuery: function(type, query){
+    query = query || {};
 
-    return this._super(type, id);
+    if (!this.container.lookup('router:main').namespace.AuthManager.isAuthenticated()){
+      query.api_key = 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA';
+    }
+
+    return this._super(type, query);
   },
 
   allRecords: function(){
