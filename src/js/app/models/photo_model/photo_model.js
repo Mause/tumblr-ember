@@ -38,7 +38,7 @@ App.Photo = DS.Model.extend(App.PostMixin, {
   }.property('rows', 'width'),
 
   rows: function(){
-    var photos = this.get('photos').mapBy('smallest'),
+    var photos = this.get('photos').mapBy('all_sizes.2'),
         photoset_layout = this.get('photoset_layout'),
         rows = [],
         cur_row,
