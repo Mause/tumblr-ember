@@ -7,7 +7,10 @@
 
         <script>
             window.ENV = {
-                ENABLE_ALL_FEATURES: true,
+                FEATURES: {
+                    'container-renderables': true,
+                    'ember-runtime-sortBy': true
+                },
                 RAISE_ON_DEPRECATION: true
             };
         </script>
@@ -16,26 +19,30 @@
         <script src="js/libs/jquery.cookie.js"></script>
         <script src="js/libs/handlebars.js"></script>
         <script src="js/libs/underscore.js"></script>
-        <script src="js/libs/oauth.js"></script>
         <script src="js/libs/bootstrap.js"></script>
+        <script src="js/libs/oauthio.js"></script>
 
         <script src="js/libs/ember.js"></script>
         <script src="js/libs/ember-data.js"></script>
 
         <script src="js/app/app.js"></script>
-        <script src="js/app/prototype_extensions.js"></script>
         <script src="js/app/handlebars_utils.js"></script>
+
+        <script src="js/app/proto_ext/array_proto_ext.js"></script>
+        <script src="js/app/proto_ext/string_proto_ext.js"></script>
+        <script src="js/app/proto_ext/function_proto_ext.js"></script>
 
         <script src="js/app/mixins/scrolling_mixin.js"></script>
         <script src="js/app/mixins/post_mixin.js"></script>
 
-        <script src="js/app/utils/auth_manager_util.js"></script>
+        <script src="js/app/utils/auth_manager_util_original.js"></script>
 
         <script src="js/app/routes/router.js"></script>
         <script src="js/app/routes/dashboard_route.js"></script>
         <script src="js/app/routes/single_blog_route.js"></script>
         <script src="js/app/routes/single_post_route.js"></script>
         <script src="js/app/routes/application_route.js"></script>
+        <script src="js/app/routes/authenticate_route.js"></script>
         <script src="js/app/routes/loading_route.js"></script>
 
         <script src="js/app/data_utils/store.js"></script>
@@ -82,6 +89,11 @@
 
                 <nav>
                     {{#link-to 'dashboard' class="btn btn-primary"}}Home{{/link-to}}
+
+                    {{#if show_load_new}}
+                        <button {{action 'loadNew'}} class="btn btn-primary">Load New</button>
+                    {{/if}}
+
                     {{#if isAuthenticated}}
                         {{#link-to 'following' class="btn btn-primary"}}Following{{/link-to}}
                         <button {{action "logout"}} class="btn btn-primary">Logout</button>
@@ -142,7 +154,7 @@
 
         <script type="text/x-handlebars" data-template-name="_single_post">
             <div class="col-lg-1 well well-lg avatar">
-                <img width="50" height="50"/>
+                <img width="50" height="50" {{bind-attr src=post.avatar_url}}/>
             </div>
             <div class="col-lg-11 well well-lg post-content" {{bind-attr post_type=post.type}}>
                 {{switch attr=post.type}}
@@ -153,7 +165,7 @@
 
         <script type="text/x-handlebars" data-template-name="components/tag-list">
             {{#bootstrap-tooltip title=post.tooltip_tags html='yes'}}
-                {{post.timestamp}}
+                <a {{bind-attr href=post.tumblrized.post_url}}>{{post.timestamp}}</a>
             {{/bootstrap-tooltip}}
         </script>
 
