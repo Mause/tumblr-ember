@@ -45,7 +45,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
       all_posts = all_posts.concat(cur_posts);
     }
 
-    all_posts = all_posts.sortBy('timestamp');
+    all_posts = all_posts.sortBy('timestamp').reverse();
     top_level_posts = all_posts.filter(this.filter);
 
     return top_level_posts;
