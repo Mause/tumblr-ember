@@ -174,14 +174,18 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="_photoset">
-            <div>
-                {{#each row in post.sized_rows}}
-                    <div>
-                        {{#each sub_photo in row.content}}
-                            {{partial 'sub_photo'}}
-                        {{/each}}
-                    </div>
-                {{/each}}
+            <div class="photoset">
+                <div>
+                    {{#each row in post.sized_rows}}
+                        <div class="photoset_row">
+                            {{#each sub_photo in row.content}}
+                                <div class="photoset_photo">
+                                    {{partial 'sub_photo'}}
+                                </div >
+                            {{/each}}
+                        </div>
+                    {{/each}}
+                </table>
                 <p>
                     {{{post.caption}}}
                 </p>
@@ -190,12 +194,12 @@
 
         <script type="text/x-handlebars" data-template-name="_sub_photo">
             <div class="media">
-                <div class="pull-left">
+                <div>
                     <img class="media-object"
                          {{bind-attr src=sub_photo.url
-                                     height=sub_photo.height
-                                     width=row.width}}
-                        ></img>
+                                     width=row.width
+                         }}
+                    ></img>
                 </div>
                 <div class="media-body">
                     {{caption}}

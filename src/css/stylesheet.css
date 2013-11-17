@@ -40,3 +40,15 @@ nav {
 .clickable {
   cursor: pointer;
 }
+
+.photoset_photo {
+  background-color: grey;
+}
+.photoset .photoset_row .photoset_photo:first-child {
+  margin-left: 0 !important;
+}
+.photoset .photoset_row .photoset_photo {
+  display: inline-block;
+  vertical-align: top;
+  /*margin-left: 10px;*/
+}
