@@ -7,7 +7,7 @@
 
 
 
- // Version: 1.0.0-beta.4+canary.56380b5b
+ // Version: 1.0.0-beta.4+canary.c15b8f80
 
 (function() {
 var define, requireModule;
@@ -62,7 +62,7 @@ var define, requireModule;
 var DS;
 if ('undefined' === typeof DS) {
   DS = Ember.Namespace.create({
-    VERSION: '1.0.0-beta.4+canary.56380b5b'
+    VERSION: '1.0.0-beta.4+canary.c15b8f80'
   });
 
   if ('undefined' !== typeof window) {
@@ -360,7 +360,7 @@ DS.DebugAdapter = Ember.DataAdapter.extend({
 DS.Transform = Ember.Object.extend({
 
   serialize: Ember.required(),
-  
+
   deserialize: Ember.required()
 
 });
@@ -440,7 +440,7 @@ DS.DateTransform = DS.Transform.extend({
     } else {
       return null;
     }
-  } 
+  }
 
 });
 
@@ -587,7 +587,7 @@ Ember.onLoad('Ember.Application', function(Application) {
 /**
   Date.parse with progressive enhancement for ISO 8601 <https://github.com/csnover/js-iso8601>
 
-  © 2011 Colin Snover <http://zetafleet.com>
+  Â© 2011 Colin Snover <http://zetafleet.com>
 
   Released under MIT license.
 
@@ -606,12 +606,12 @@ var origParse = Date.parse, numericKeys = [ 1, 4, 5, 6, 7, 10, 11 ];
 Ember.Date.parse = function (date) {
     var timestamp, struct, minutesOffset = 0;
 
-    // ES5 §15.9.4.2 states that the string should attempt to be parsed as a Date Time String Format string
-    // before falling back to any implementation-specific date parsing, so that’s what we do, even if native
+    // ES5 Â§15.9.4.2 states that the string should attempt to be parsed as a Date Time String Format string
+    // before falling back to any implementation-specific date parsing, so thatâ€™s what we do, even if native
     // implementations could be faster
-    //              1 YYYY                2 MM       3 DD           4 HH    5 mm       6 ss        7 msec        8 Z 9 ±    10 tzHH    11 tzmm
+    //              1 YYYY                2 MM       3 DD           4 HH    5 mm       6 ss        7 msec        8 Z 9 Â±    10 tzHH    11 tzmm
     if ((struct = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/.exec(date))) {
-        // avoid NaN timestamps caused by “undefined” values being passed to Date.UTC
+        // avoid NaN timestamps caused by â€œundefinedâ€ values being passed to Date.UTC
         for (var i = 0, k; (k = numericKeys[i]); ++i) {
             struct[k] = +struct[k] || 0;
         }
@@ -1898,7 +1898,7 @@ DS.Store = Ember.Object.extend(DS._Mappable, {
     If any of a record's properties change, or if it changes state, the
     filter function will be invoked again to determine whether it should
     still be in the array.
-    
+
     Optionally you can pass a query which will be triggered at first. The
     results returned by the server could then appear in the filter if they
     match the filter function.
@@ -4986,7 +4986,7 @@ DS.Model.reopenClass({
     var options = this.metaForProperty(name).options;
 
     if (options.inverse === null) { return null; }
-    
+
     var inverseName, inverseKind;
 
     if (options.inverse) {
@@ -5128,7 +5128,7 @@ DS.Model.reopenClass({
         App.Blog = DS.Model.extend({
           users: DS.hasMany('user'),
           owner: DS.belongsTo('user'),
-  
+
           posts: DS.hasMany('post')
         });
 
@@ -6920,7 +6920,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     The `find` method makes an Ajax request to a URL computed by `buildURL`, and returns a
     promise for the resulting payload.
 
-    This method performs an HTTP `GET` request with the id provided as part of the querystring. 
+    This method performs an HTTP `GET` request with the id provided as part of the querystring.
 
     @method find
     @see RESTAdapter/buildURL
@@ -7104,7 +7104,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     Called by the store when a newly created record is
     saved via the `save` method on a model record instance.
 
-    The `createRecord` method serializes the record and makes an Ajax (HTTP POST) request 
+    The `createRecord` method serializes the record and makes an Ajax (HTTP POST) request
     to a URL computed by `buildURL`.
 
     See `serialize` for information on how to customize the serialized form
@@ -7129,10 +7129,10 @@ DS.RESTAdapter = DS.Adapter.extend({
   },
 
   /**
-    Called by the store when an existing record is saved 
+    Called by the store when an existing record is saved
     via the `save` method on a model record instance.
-    
-    The `updateRecord` method serializes the record and makes an Ajax (HTTP PUT) request 
+
+    The `updateRecord` method serializes the record and makes an Ajax (HTTP PUT) request
     to a URL computed by `buildURL`.
 
     See `serialize` for information on how to customize the serialized form
@@ -8036,9 +8036,9 @@ var forEach = Ember.EnumerableUtils.forEach;
   [active_model_serializers](http://github.com/rails-api/active_model_serializers)
   Ruby gem.
 
-  This adapter extends the DS.RESTAdapter by making consistent use of the camelization, 
-  decamelization and pluralization methods to normalize the serialized JSON into a 
-  format that is compatible with a conventional Rails backend and Ember Data. 
+  This adapter extends the DS.RESTAdapter by making consistent use of the camelization,
+  decamelization and pluralization methods to normalize the serialized JSON into a
+  format that is compatible with a conventional Rails backend and Ember Data.
 
   ## JSON Structure
 
@@ -8081,7 +8081,7 @@ var forEach = Ember.EnumerableUtils.forEach;
 DS.ActiveModelAdapter = DS.RESTAdapter.extend({
   defaultSerializer: '_ams',
   /**
-    The ActiveModelAdapter overrides the `pathForType` method to build 
+    The ActiveModelAdapter overrides the `pathForType` method to build
     underscored URLs by decamelizing and pluralizing the object type name.
 
     ```js
@@ -8102,13 +8102,13 @@ DS.ActiveModelAdapter = DS.RESTAdapter.extend({
     The ActiveModelAdapter overrides the `ajaxError` method
     to return a DS.InvalidError for all 422 Unprocessable Entity
     responses.
-    
+
     A 422 HTTP response from the server generally implies that the request
-    was well formed but the API was unable to process it because the 
+    was well formed but the API was unable to process it because the
     content was not semantically correct or meaningful per the API.
-    
+
     For more information on 422 HTTP Error code see 11.2 WebDAV RFC 4918
-    https://tools.ietf.org/html/rfc4918#section-11.2 
+    https://tools.ietf.org/html/rfc4918#section-11.2
 
     @method ajaxError
     @param jqXHR
