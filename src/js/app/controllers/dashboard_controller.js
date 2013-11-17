@@ -42,7 +42,7 @@ App.DashboardController = Em.ArrayController.extend({
         limit: api_config.limit
       });
 
-      Em.debug('Loading more posts...');
+      Em.debug('Loading more posts from the blog %@...'.fmt(blog_name));
       this.set('isLoading', true);
 
       this.store.findQuery('post', query).then(

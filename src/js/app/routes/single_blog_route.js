@@ -5,6 +5,8 @@ App.SingleBlogRoute = App.DashboardRoute.extend({
     var namespace = this.router.namespace;
     namespace.api_config.offset += namespace.api_config.limit;
 
+    Em.debug('Loading posts from the blog %@'.fmt(params.blog_name));
+
     return this.store.findQuery('post', {
       limit: namespace.api_config.limit,
       blog_name: params.blog_name

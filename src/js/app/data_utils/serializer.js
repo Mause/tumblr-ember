@@ -115,8 +115,8 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
       /*jshint loopfunc:true*/
       parentType.eachRelationship(function(name, meta){
         if (meta.options.embedded){
-          Ember.debug('extracting records from the %@ attribute from %@ record'.fmt(
-            name, typeName));
+          // Ember.debug('extracting records from the %@ attribute from %@ record'.fmt(
+          //   name, typeName));
           payload = self.process(payload, typeName, name, meta);
         }
       });
