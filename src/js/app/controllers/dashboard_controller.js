@@ -24,7 +24,6 @@ App.DashboardController = Em.ArrayController.extend({
       var oldPosts,
           blog_name = this.get('controllers.application.metadata.name'),
           api_config = this.namespace.api_config,
-          query = query || {},
           self = this;
 
       // don't try to load more posts if we're already loading some;
@@ -36,6 +35,7 @@ App.DashboardController = Em.ArrayController.extend({
       oldPosts = this.get('model');
       oldPosts = oldPosts.get('content') || oldPosts;
 
+      query = query || {};
       Em.merge(query, {
         blog_name: blog_name,
         offset: api_config.next_offset(),

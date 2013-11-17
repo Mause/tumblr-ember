@@ -11,10 +11,13 @@ App.Photo = DS.Model.extend(App.PostMixin, {
     'use strict';
     var rows = this.get('rows'),
         lengths = rows.mapBy('length'),
+        shortest_length = Math.min.apply(this, lengths),
         shortest_row;
 
-    rows = rows.filterBy('length', Math.min.apply(this, lengths));
+    rows = rows.filterBy('length', shortest_length);
     shortest_row = rows.objectAt(0);
+
+    Em.debug('The row with the least images is %@ images wide'.fmt(shortest_length));
 
     return shortest_row.mapBy('width').sum();
   }.property('rows'),
@@ -49,6 +52,7 @@ App.Photo = DS.Model.extend(App.PostMixin, {
     }
 
     for (var i=0;i<photoset_layout.length; i++){
+      // parse as base ten, damn js -.-
       number_on_row = parseInt(photoset_layout[i], 10);
 
       cur_row = [];

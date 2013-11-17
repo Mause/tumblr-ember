@@ -38,7 +38,7 @@ App.SubPhoto = DS.Model.extend({
 
   display_size: function(){
     // here we determine the best image size to display... it is difficult
-  },
+  }.property('alt_sizes'),
 
   type: 'sub_photo'
 });
