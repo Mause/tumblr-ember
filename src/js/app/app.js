@@ -20,10 +20,10 @@ Ember.LOG_STACKTRACE_ON_DEPRECATION = true;
 Ember.DEBUG = true;
 
 Ember.Application.reopen({
-  init: function(){
-    OAuth.initialize('0TnyjiS8p8uTFe23WCej3DMeAVQ');
-    return this._super.apply(this, arguments);
-  },
+  // init: function(){
+  //   OAuth.initialize('0TnyjiS8p8uTFe23WCej3DMeAVQ');
+  //   return this._super.apply(this, arguments);
+  // },
 
   document_title: function(keyName, value){
     Ember.run.once(function(){

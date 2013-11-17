@@ -2,9 +2,9 @@ App.Store = DS.Store.extend({
   findQuery: function(type, query){
     query = query || {};
 
-    if (!this.container.lookup('router:main').namespace.AuthManager.isAuthenticated()){
+    // if (!this.container.lookup('router:main').namespace.AuthManager.isAuthenticated()){
       query.api_key = 'a3yqP8KA1ztkIbq4hpokxEOwnUkleu2AMv0XsBWC0qLBKVL7pA';
-    }
+    // }
 
     return this._super(type, query);
   },
