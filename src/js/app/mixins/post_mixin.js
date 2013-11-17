@@ -25,11 +25,13 @@ App.PostMixin = Ember.Mixin.create({
     }.property('tags'),
 
     tumblrized: function(){
-        var out = {}, self = this;
+        var out = {},
+            self = this,
+            blog_name = this.get('blog_name');
 
         this.eachAttribute(function(name, meta){
             if (meta.type === 'string')
-                out[name] = App.utils._mend_url(self.get(name));
+                out[name] = App.utils._mend_url(self.get(name), blog_name);
         });
 
         return out;

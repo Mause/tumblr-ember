@@ -1,14 +1,19 @@
 App.utils = {
-  _mend_url: function(url) {
-    var router = App.__container__.lookup('router:main'),
-        parsed_url = /http:\/\/([^\.]*).tumblr.com(?:\/post\/(\d+)\/?([a-z0-9\-]*))?/g.exec(url);
+  _mend_url: function(url, blog_name) {
+    'use strict';
+    var router = App.__container__.lookup('router:main'), parsed_url;
 
-    if (!parsed_url) return url;
+    if (!blog_name && url.indexOf('.tumblr.com') === -1) return;
+    if (!blog_name){
+      blog_name = /http:\/\/([^\.]*).tumblr.com/.exec(url)[1];
+      url = url.substring(blog_name.length + 18, url.length);
+    }
 
-    return router.generate(Em.isEmpty(parsed_url[[2]]) ? 'single_blog' : 'single_post', {
-      blog_name: parsed_url[1],
-      post_ident: parsed_url[2],
-      post_slug: parsed_url[3]
+    parsed_url = /\/post\/(\d+)\/?([a-z0-9\-]*)/g.exec(url) || [];
+    return router.generate(Em.isEmpty(parsed_url) ? 'single_blog' : 'single_post', {
+      blog_name: blog_name,
+      post_ident: parsed_url[1],
+      post_slug: parsed_url[2]
     });
   },
 
