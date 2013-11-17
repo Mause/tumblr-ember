@@ -1,5 +1,5 @@
 Ember.RSVP.configure('onerror', function(e) {
-  if (e.message != "TransitionAborted") {
+  if (!["TransitionAborted", "TypeError"].contains(e.message) && e.name !== "TypeError") {
     console.error(e);
     console.error(e.stack);
     debugger;
