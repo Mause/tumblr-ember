@@ -2,8 +2,9 @@ App.SingleBlogRoute = App.DashboardRoute.extend({
   beforeModel: Em.K,
 
   model: function(params) {
+    'use strict';
     var namespace = this.router.namespace;
-    namespace.api_config.offset += namespace.api_config.limit;
+    namespace.api_config.next_offset();
 
     Em.debug('Loading posts from the blog %@'.fmt(params.blog_name));
 
