@@ -3,7 +3,7 @@ App.LoadingRoute = Em.Route.extend({
 
   renderTemplate: function() {
     // have it always render into the application template
-    this.render('loading', {
+    this.render('loading_route', {
       outlet: 'main'
     });
   }
