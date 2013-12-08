@@ -20,6 +20,9 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
   ajax: function(url, type, hash){
     var promise = this._super(url, type, hash), success;
 
+    // this function is required for jsonp requests, because
+    // the actual request status code is embedded within the response
+
     success = function(promise, payload){
       if (payload.meta && payload.meta.status){
         if (payload.meta.status !== 200){
